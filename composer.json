@@ -1,0 +1,19 @@
+{
+    "name": "hhajj/app",
+    "description": "applicaton quize web",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "HM-Hajjaji",
+            "email": "hhajjaji.fsd@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+        "symfony/var-dumper": "^6.3"
+    }
+}

@@ -29,6 +29,15 @@ if (!function_exists("viewPath"))
         return basePath() . "/view/";
     }
 }
+
+if (!function_exists("configPath"))
+{
+    function configPath():string
+    {
+        return basePath() . "/config/";
+    }
+}
+
 if (!function_exists("viewError"))
 {
     function viewError(int $code):void

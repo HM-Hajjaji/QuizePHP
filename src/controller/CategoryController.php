@@ -4,10 +4,10 @@ namespace App\controller;
 
 use App\controller\base\BaseController;
 
-class HomeController extends BaseController
+class CategoryController extends BaseController
 {
     public function index()
     {
-        $this->view("admin/home/index",['isHome' => true]);
+        $this->view("admin/category/index",['isCategory' => true]);
     }
 }

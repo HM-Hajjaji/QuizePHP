@@ -4,25 +4,22 @@ namespace App\controller\base;
 
 abstract class BaseController
 {
-    protected function view(string $path,array $data = []):void
+    protected function view(string $path, array $data = []): void
     {
-        echo str_replace("{{body}}",$this->viewContent($path,$data),$this->viewBase());;
+        echo $this->renderView($path, $data);
     }
 
-    private function viewBase():string | false
+    private function renderView(string $path, array $data): string
     {
-        ob_start();
-        include_once viewPath()."base/base.php";
-        return ob_get_clean();
+        $viewBaseContent = $this->renderViewContent(viewPath() . "base/base.php", $data);
+        return str_replace("{{body}}",$this->renderViewContent(viewPath() . $path . ".php", $data),$viewBaseContent);
     }
-    private function viewContent(string $path,array $data=[]):string|false
+
+    private function renderViewContent(string $viewPath, array $data): string
     {
+        extract($data);
         ob_start();
-        foreach ($data as $key => $value)
-        {
-            $$key = $value;
-        }
-        include_once sprintf("%s/%s.php",viewPath(),$path);
+        include $viewPath;
         return ob_get_clean();
     }
 }

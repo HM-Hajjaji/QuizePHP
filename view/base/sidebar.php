@@ -16,16 +16,40 @@
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item menu-open">
-                    <a href="<?=path("app_home")?>" class="nav-link <?=isset($isHome)?"active":""?>">
+                <li class="nav-item">
+                    <a href="<?=path("app_admin_home")?>" class="nav-link <?=isset($isHome)?"active":""?>">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item menu-open">
-                    <a href="<?=path("app_category")?>" class="nav-link <?=isset($isCategory)?"active":""?>">
+                <li class="nav-item">
+                    <a href="<?=path("app_admin_category")?>" class="nav-link <?=isset($isCategory)?"active":""?>">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>Category</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=path("app_admin_quiz")?>" class="nav-link <?=isset($isQuiz)?"active":""?>">
+                        <i class="nav-icon fas fa-broom"></i>
+                        <p>Quiz</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=path("app_admin_exam")?>" class="nav-link <?=isset($isExam)?"active":""?>">
+                        <i class="nav-icon fas fa-star"></i>
+                        <p>Exam</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=path("app_admin_user")?>" class="nav-link <?=isset($isUser)?"active":""?>">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>User</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=path("app_admin_setting")?>" class="nav-link <?=isset($isSeting)?"active":""?>">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>Setting</p>
                     </a>
                 </li>
             </ul>

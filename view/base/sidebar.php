@@ -47,7 +47,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?=path("app_admin_setting")?>" class="nav-link <?=isset($isSeting)?"active":""?>">
+                    <a href="<?=path("app_admin_setting")?>" class="nav-link <?=isset($isSetting)?"active":""?>">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>Setting</p>
                     </a>

@@ -9,22 +9,15 @@ abstract class HttpBase
 {
     protected static array $routes = [];
     protected Request $request;
-    protected Response $response;
 
-    protected function __construct(Request $request, Response $response)
+    protected function __construct(Request $request)
     {
         $this->request = $request;
-        $this->response = $response;
     }
 
     public function getRequest(): Request
     {
         return $this->request;
-    }
-
-    public function getResponse(): Response
-    {
-        return $this->response;
     }
 
     public function path(string $name,array$params=[]):string|false

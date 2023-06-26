@@ -15,7 +15,7 @@ class Application
 
     public function __construct()
     {
-        $this->route = new Route(new Request(),new Response());
+        $this->route = new Route(new Request());
         $this->database = Database::handler();
     }
 

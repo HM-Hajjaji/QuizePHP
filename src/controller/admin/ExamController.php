@@ -3,11 +3,12 @@
 namespace App\controller\admin;
 
 use App\controller\base\BaseController;
+use App\http\Response;
 
 class ExamController extends BaseController
 {
-    public function index()
+    public function index():Response
     {
-        $this->view("admin/exam/index",['isExam' => true]);
+        return $this->view("admin/exam/index",['isExam' => true]);
     }
 }

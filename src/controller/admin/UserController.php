@@ -3,11 +3,12 @@
 namespace App\controller\admin;
 
 use App\controller\base\BaseController;
+use App\http\Response;
 
 class UserController extends BaseController
 {
-    public function index()
+    public function index():Response
     {
-        $this->view("admin/user/index",['isUser' => true]);
+        return $this->view("admin/user/index",['isUser' => true]);
     }
 }

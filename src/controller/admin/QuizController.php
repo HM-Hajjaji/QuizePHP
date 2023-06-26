@@ -3,11 +3,12 @@
 namespace App\controller\admin;
 
 use App\controller\base\BaseController;
+use App\http\Response;
 
 class QuizController extends BaseController
 {
-    public function index()
+    public function index():Response
     {
-        $this->view("admin/quiz/index",['isQuiz' => true]);
+        return $this->view("admin/quiz/index",['isQuiz' => true]);
     }
 }

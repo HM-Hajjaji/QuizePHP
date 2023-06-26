@@ -4,9 +4,9 @@ use App\http\base\HttpBase;
 
 class Route extends HttpBase
 {
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request)
     {
-        parent::__construct($request,$response);
+        parent::__construct($request);
     }
 
     public static function get(string $name,string $path,array|callable $action):void

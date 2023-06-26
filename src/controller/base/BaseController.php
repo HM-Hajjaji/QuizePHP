@@ -2,11 +2,14 @@
 
 namespace App\controller\base;
 
+use App\http\Response;
+
 abstract class BaseController
 {
-    protected function view(string $path, array $data = []): void
+    protected function view(string $path, array $data = []): Response
     {
-        echo $this->renderView($path, $data);
+        $response = new Response($this->renderView($path, $data));
+        return $response->send();
     }
 
     private function renderView(string $path, array $data): string

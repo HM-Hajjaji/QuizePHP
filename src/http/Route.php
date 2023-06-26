@@ -9,23 +9,29 @@ class Route extends HttpBase
         parent::__construct($request,$response);
     }
 
-
-    public static function get(string $path,array|callable $action):void
+    public static function get(string $name,string $path,array|callable $action):void
     {
-        self::$routes['get'][$path] = $action;
+        self::$routes['get'][$name] = ['path' => $path,"action" => $action];
     }
 
-    public static function post(string $path,array|callable $action):void
+    public static function post(string $name,string $path,array|callable $action):void
     {
-        self::$routes['post'][$path] = $action;
+        self::$routes['post'][$name] = ['path' => $path,"action" => $action];
     }
 
     public function resolve():void
     {
         $method = $this->request->getMethod();
         $path = $this->request->getPath();
-
-        $action = self::$routes[$method][$path]??false;
+        $action = false;
+        $list= self::$routes[$method];
+        foreach ($list as $name => $value)
+        {
+            if ($value['path'] == $path)
+            {
+                $action = $value['action'];
+            }
+        }
         if (!$action)
         {
             viewError(404);

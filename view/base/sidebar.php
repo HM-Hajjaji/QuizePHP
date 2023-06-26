@@ -17,13 +17,13 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item menu-open">
-                    <a href="/" class="nav-link <?=$isHome?"active":""?>">
+                    <a href="<?=path("app_home")?>" class="nav-link <?=isset($isHome)?"active":""?>">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="nav-item menu-open">
-                    <a href="/category" class="nav-link <?=$isCategory?"active":""?>">
+                    <a href="<?=path("app_category")?>" class="nav-link <?=isset($isCategory)?"active":""?>">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>Category</p>
                     </a>

@@ -27,4 +27,8 @@ abstract class HttpBase
         return $this->response;
     }
 
+    public function path(string $name,array$params=[]):string|false
+    {
+        return self::$routes[$this->request->getMethod()][$name]["path"]??false;
+    }
 }

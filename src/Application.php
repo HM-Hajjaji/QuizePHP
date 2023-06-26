@@ -20,4 +20,10 @@ class Application
         Dotenv::createImmutable(basePath())->load();
         $this->route->resolve();
     }
+
+    public function getRoute(): Route
+    {
+        return $this->route;
+    }
+
 }

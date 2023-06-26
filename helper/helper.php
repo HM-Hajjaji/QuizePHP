@@ -56,3 +56,16 @@ if (!function_exists("schemaHttp"))
         return sprintf("%s://%s/",$protocol,$_SERVER["HTTP_HOST"]);
     }
 }
+
+if (!function_exists("path"))
+{
+    function path(string $name = "app"):string
+    {
+        $path =  app()->getRoute()->path($name);
+        if (!$path)
+        {
+            return "/";
+        }
+        return $path;
+    }
+}

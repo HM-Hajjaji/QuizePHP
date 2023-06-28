@@ -5,13 +5,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="<?= schemaHttp().'asset/app.css' ?>">
+    <link rel="stylesheet" href="<?=urlBase().'asset/app.css'?>">
+    <script defer src="<?=urlBase().'asset/app.js'?>" type="module"></script>
     <title><?=env("APP_NAME")?></title>
 </head>
 <body class="sidebar-mini">
     <div class="wrapper">
-        <?php include_once viewPath()."base/header.php"?>
-        <?php include_once viewPath()."base/sidebar.php"?>
+        <?php
+            include_once viewPath()."base/header.php";
+            include_once viewPath()."base/sidebar.php";
+        ?>
         <div class="content-wrapper">
             <!--<div class="content-header">
                 <div class="container-fluid">
@@ -35,6 +38,5 @@
             </section>
         </div>
     </div>
-    <script defer src="<?= schemaHttp().'asset/app.js' ?>" type="module"></script>
 </body>
 </html>

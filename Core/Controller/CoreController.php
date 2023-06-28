@@ -1,15 +1,15 @@
 <?php
 
-namespace App\controller\base;
+namespace Core\Controller;
 
-use App\http\Response;
+use Core\Http\Response;
 
-abstract class BaseController
+abstract class CoreController
 {
-    protected function view(string $path, array $data = []): Response
+    protected function view(string $view,array $data = []):Response
     {
-        $response = new Response($this->renderView($path, $data));
-        return $response->send();
+        $response = core()->getRoute()->getResponse();
+        return $response($this->renderView($view,$data));
     }
 
     private function renderView(string $path, array $data): string
@@ -22,7 +22,12 @@ abstract class BaseController
     {
         extract($data);
         ob_start();
-        include $viewPath;
+            include_once $viewPath;
         return ob_get_clean();
+    }
+
+    public function redirectTo(string $path):void
+    {
+        header('location:'.path($path));
     }
 }

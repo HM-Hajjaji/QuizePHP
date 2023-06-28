@@ -10,22 +10,23 @@ class User implements HashInterface
     private string $name;
     private string $username;
     private string $password;
-    private array $type;
+    private array $types;
     private \DateTimeImmutable $createdAt;
 
     /**
      * @param string $name
      * @param string $username
      * @param string $password
-     * @param array $type
+     * @param array $types
      */
-    public function __construct(string $name, string $username, string $password, array $type)
+    public function __construct(int $id = null,string $name, string $username, string $password, array $types,\DateTimeImmutable $createdAt)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->username = $username;
         $this->password = $password;
-        $this->type = $type;
-        $this->createdAt = new \DateTimeImmutable();
+        $this->types = $types;
+        $this->createdAt = $createdAt;
     }
 
     public function __toString(): string
@@ -54,7 +55,7 @@ class User implements HashInterface
      */
     public function setName(string $name): void
     {
-        $this->name = $name;
+        $this->name =ucfirst($name);
     }
 
     /**
@@ -94,15 +95,17 @@ class User implements HashInterface
      */
     public function getType(): array
     {
-        return $this->type;
+        $types = $this->types;
+        $types[] = 'TYPE_USER';
+        return array_unique($types);
     }
 
     /**
      * @param array $type
      */
-    public function setType(array $type): void
+    public function setType(array $types): void
     {
-        $this->type = $type;
+        $this->types = $types;
     }
 
     /**

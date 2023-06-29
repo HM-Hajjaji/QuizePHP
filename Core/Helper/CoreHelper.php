@@ -80,7 +80,7 @@ if (!function_exists("path"))
      */
     function path(string $name = "app"):string
     {
-        $path =  core()->getRoute()->path($name);
+        $path = core()->getRoute()->path($name);
         if (!$path)
         {
             return "/";

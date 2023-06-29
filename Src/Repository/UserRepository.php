@@ -25,8 +25,8 @@ class UserRepository extends CoreRepository
         $list = [];
         foreach ($users as $user)
         {
-            $user = new User(id: $user->id,name: $user->name,username: $user->username,password: $user->password,types: explode(" ",$user->types),createdAt: new \DateTimeImmutable($user->createdAt));
-            $list[] = $user;
+            $object= new User(id: $user->id,name: $user->name,username: $user->username,password: $user->password,types: explode(" ",$user->types),createdAt: new \DateTimeImmutable($user->createdAt));
+            $list[] = $object;
         }
         return $list;
     }

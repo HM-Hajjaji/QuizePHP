@@ -40,7 +40,6 @@ abstract class CoreHttp
      */
     public function path(string $name, array $params=[]):string|false
     {
-//        dd(self::$routes[$this->request->getMethod()][$name]["path"]);
         return self::$routes[$this->request->getMethod()][$name]["url"]??false;
     }
 }

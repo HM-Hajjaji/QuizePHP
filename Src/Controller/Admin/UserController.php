@@ -8,9 +8,16 @@ use Core\Http\Response;
 
 class UserController extends CoreController
 {
+    private static UserRepository $userRepository;
+
+    public function __construct()
+    {
+        self::$userRepository = new UserRepository();
+    }
+
+
     public function index():Response
     {
-        $userRepository = new UserRepository();
-        return $this->view("admin/user/index",['isUser' => true,"users" => $userRepository->all()]);
+        return $this->view("admin/user/index",['isUser' => true,"users" => self::$userRepository->all()]);
     }
 }

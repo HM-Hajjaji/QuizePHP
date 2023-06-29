@@ -28,6 +28,7 @@ abstract class CoreController
 
     public function redirectTo(string $path):void
     {
-        header('location:'.path($path));
+        core()->getRoute()->getRequest()->setMethod("GET");
+        header("location:".path($path));
     }
 }

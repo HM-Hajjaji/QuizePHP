@@ -34,7 +34,7 @@ abstract class CoreHttp
 
     /**
      * the function for get url by name from list routes
-     * @param string $name
+     * @param string $path
      * @param array $params
      * @return string|false
      */
@@ -48,7 +48,7 @@ abstract class CoreHttp
                 if ($pathName== $path)
                 {
                     $url = $method[$path]["url"];
-                    break;
+                    break 2;
                 }
             }
         }

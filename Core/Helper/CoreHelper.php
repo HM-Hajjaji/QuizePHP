@@ -84,7 +84,8 @@ if (!function_exists("path"))
 {
     /**
      * the function get url by name from list routes
-     * @param string $name the name of path in list routes
+     * @param string $path the name of path in list routes
+     * @param array $params
      * @return string
      */
     function path(string $path = "app",array $params = []):string

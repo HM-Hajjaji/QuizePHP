@@ -36,4 +36,8 @@ class CategoryController extends CoreController
         return $this->view("admin/category/new",['isCategory' => true]);
     }
 
+    public function delete()
+    {
+
+    }
 }

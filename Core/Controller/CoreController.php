@@ -8,7 +8,7 @@ abstract class CoreController
 {
     protected function view(string $view,array $data = []):Response
     {
-        $response = core()->getRoute()->getResponse();
+        $response = route()->getResponse();
         return $response($this->renderView($view,$data));
     }
 
@@ -28,7 +28,7 @@ abstract class CoreController
 
     public function redirectTo(string $path):void
     {
-        core()->getRoute()->getRequest()->setMethod("GET");
-        header("location:".path($path));
+        route()->getRequest()->setMethod("GET");
+        route()->redirect(path($path));
     }
 }

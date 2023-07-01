@@ -16,13 +16,23 @@ class Route extends CoreHttp
 
     public function post(string $path,string $url,array|callable $action):void
     {
+        /*if (preg_match_all("/\{.*?\}/",$url,$params))
+        {
+            $params = array_map(fn($param) => trim(str_replace(['{','}'],'',$param)),reset($params));
+            $url = str_replace("//","/",trim(preg_replace("/{[^{}]*}/", "", $url)));
+            dd($url);
+            dd($params);
+        }*/
         self::$routes['post'][$path] = ['url' => $url,"action" => $action];
     }
 
     public function resolve():void
     {
-        $method = $this->request->getMethod();
-        $url = $this->request->getURL();
+        $this->execute($this->request->getMethod(),$this->request->getURL());
+    }
+
+    private function execute(string $method,string $url):void
+    {
         $action = false;
         $paths = self::$routes[$method];
         foreach ($paths as $path)
@@ -45,4 +55,10 @@ class Route extends CoreHttp
             }
         }
     }
+
+    public function redirect(string $url,string $method = "get"):void
+    {
+        $this->execute($method,$url);
+    }
+    
 }

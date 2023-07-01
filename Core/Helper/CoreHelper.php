@@ -1,6 +1,7 @@
 <?php
 
 use App\Core;
+use Core\Http\Route;
 
 //main function
 if (!function_exists("core"))
@@ -13,6 +14,14 @@ if (!function_exists("core"))
     {
         static $core = new Core();
         return $core;
+    }
+}
+
+if (!function_exists("route"))
+{
+    function route():Route
+    {
+       return core()->getRoute();
     }
 }
 
@@ -80,7 +89,7 @@ if (!function_exists("path"))
      */
     function path(string $name = "app"):string
     {
-        $path = core()->getRoute()->path($name);
+        $path = route()->path($name);
         if (!$path)
         {
             return "/";

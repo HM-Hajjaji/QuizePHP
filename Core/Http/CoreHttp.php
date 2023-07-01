@@ -38,8 +38,37 @@ abstract class CoreHttp
      * @param array $params
      * @return string|false
      */
-    public function path(string $name, array $params=[]):string|false
+    public function path(string $path, array $params=[]):string|bool
     {
-        return self::$routes[$this->request->getMethod()][$name]["url"]??false;
+        $url = false;
+        foreach (self::$routes as $method)
+        {
+            foreach (array_keys($method) as $pathName)
+            {
+                if ($pathName== $path)
+                {
+                    $url = $method[$path]["url"];
+                    break;
+                }
+            }
+        }
+        if (!$url)
+        {
+            return false;
+        }
+        foreach (explode("/",$url) as $segment) {
+            if (preg_match('/\{(\w+)\}/', $segment,$match))
+            {
+                $url = str_replace($match[0],$params[$match[1]],$url);
+            }
+        }
+        return $url;
+    }
+
+    protected function handler(string $path,string $url,array|callable $action,string $method = "get"|"post"):void
+    {
+        $path = trim($path);$url = trim($url);
+        $url = !str_ends_with($url,"/") ? $url .= "/":$url;
+        self::$routes[$method][$path] = ['url' => trim($url),"action" => $action];
     }
 }

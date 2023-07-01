@@ -11,19 +11,13 @@ class Route extends CoreHttp
 
     public function get(string $path,string $url,array|callable $action):void
     {
-        self::$routes['get'][$path] = ['url' => $url,"action" => $action];
+
+        $this->handler($path,$url,$action,"get");
     }
 
     public function post(string $path,string $url,array|callable $action):void
     {
-        /*if (preg_match_all("/\{.*?\}/",$url,$params))
-        {
-            $params = array_map(fn($param) => trim(str_replace(['{','}'],'',$param)),reset($params));
-            $url = str_replace("//","/",trim(preg_replace("/{[^{}]*}/", "", $url)));
-            dd($url);
-            dd($params);
-        }*/
-        self::$routes['post'][$path] = ['url' => $url,"action" => $action];
+        $this->handler($path,$url,$action,"post");
     }
 
     public function resolve():void
@@ -33,32 +27,55 @@ class Route extends CoreHttp
 
     private function execute(string $method,string $url):void
     {
-        $action = false;
-        $paths = self::$routes[$method];
-        foreach ($paths as $path)
+        $routes = self::$routes[$method] ?? [];
+        $url = !str_ends_with($url,"/") ? $url .= "/":$url;
+        foreach ($routes as $route)
         {
-            if ($path['url'] == $url)
+            $params = $this->matchPath($route['url'],$url);
+            if (is_array($params))
             {
-                $action = $path['action'];
+                $this->executeAction($route['action'],$params);
+                return;
             }
         }
-        if ($action)
-        {
-            switch ($action)
-            {
-                case is_callable($action):
-                    $action();
-                    break;
-                case is_array($action):
-                    call_user_func(array(new $action[0],$action[1]));
-                    break;
-            }
-        }
+        $this->response->setStatusCode(404);
+        $this->response->setContent('404 - Page Not Found');
+        $this->response->render();
     }
 
-    public function redirect(string $url,string $method = "get"):void
+    private function matchPath(string $pattern,string $url):bool|array
     {
-        $this->execute($method,$url);
+        $params = [];
+        $patternSegments = explode('/', $pattern);
+        $urlSegments = explode('/', $url);
+        if (count($patternSegments) !== count($urlSegments)) {
+            return false;
+        }
+        foreach ($patternSegments as $index => $segment) {
+            if (preg_match('/\{(\w+)\}/', $segment,$match))
+            {
+                $pattern = str_replace($match[0],$urlSegments[$index],$pattern);
+                $params[$match[1]] = $urlSegments[$index];
+            }
+        }
+        if ($pattern !== $url)
+        {
+            return false;
+        }
+        return $params;
+    }
+
+    private function executeAction(callable|array $action,array|null $params):void
+    {
+        switch ($action)
+        {
+            case is_callable($action):
+                call_user_func_array($action,$params);
+                break;
+            case is_array($action):
+                call_user_func_array(array(new $action[0],$action[1]),$params);
+                break;
+        }
     }
     
 }

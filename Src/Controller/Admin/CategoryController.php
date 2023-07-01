@@ -36,8 +36,9 @@ class CategoryController extends CoreController
         return $this->view("admin/category/new",['isCategory' => true]);
     }
 
-    public function delete()
+    public function delete(int $id):void
     {
-
+        $this->categoryRepository->remove($id);
+        $this->redirectTo("app_admin_category");
     }
 }

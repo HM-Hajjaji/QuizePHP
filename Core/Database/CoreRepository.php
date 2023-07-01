@@ -16,5 +16,5 @@ abstract class CoreRepository
     abstract public function find(int $id);
     abstract public function add(object $model);
     abstract public function update(object $model);
-    abstract public function remove(object $model);
+    abstract public function remove(int $id);
 }

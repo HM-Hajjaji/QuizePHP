@@ -87,13 +87,13 @@ if (!function_exists("path"))
      * @param string $name the name of path in list routes
      * @return string
      */
-    function path(string $name = "app"):string
+    function path(string $path = "app",array $params = []):string
     {
-        $path = route()->path($name);
-        if (!$path)
+        $url = route()->path($path,$params);
+        if (!$url)
         {
             return "/";
         }
-        return $path;
+        return $url;
     }
 }

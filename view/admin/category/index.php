@@ -26,7 +26,11 @@
                             <td><?=$category->getId()?></td>
                             <td><?=$category->getTitle()?></td>
                             <td><?=$category->getCreatedAt()->format("Y-m-d H:i")?></td>
-                            <td></td>
+                            <td>
+                                <form class="d-inline" method="post" action="<?=path("app_admin_category_delete",['id' => $category->getId()])?>" onsubmit="return confirm('Are you sure you want to delete this item?')">
+                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
                         </tr>
                     <?php endforeach;?>
                 <?php else:?>

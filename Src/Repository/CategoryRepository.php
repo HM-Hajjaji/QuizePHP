@@ -36,7 +36,11 @@ class CategoryRepository extends CoreRepository
 
     public function find(int $id)
     {
-        // TODO: Implement find() method.
+        $query = "SELECT * FROM $this->tableName WHERE id=:id";
+        $statement =$this->pdo->prepare($query);
+        $statement->bindValue(":id",$id);
+        $statement->execute();
+        $model = $statement->fetch();
     }
 
     public function add(object $model):bool
@@ -56,8 +60,11 @@ class CategoryRepository extends CoreRepository
         // TODO: Implement update() method.
     }
 
-    public function remove(object $model)
+    public function remove(int $id):bool
     {
-        // TODO: Implement remove() method.
+        $query = "DELETE FROM $this->tableName WHERE id=:id";
+        $statement =$this->pdo->prepare($query);
+        $statement->bindValue(":id",$id);
+        return $statement->execute();
     }
 }

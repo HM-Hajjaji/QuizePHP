@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\model\Category;
+use App\Model\Category;
 use Core\Database\CoreRepository;
 use PDO;
 

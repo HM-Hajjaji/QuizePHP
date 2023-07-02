@@ -1,6 +1,6 @@
 <?php
 
-namespace App\model;
+namespace App\Model;
 
 class Category
 {
@@ -14,7 +14,7 @@ class Category
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId(): ?int
     {

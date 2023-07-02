@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\model\Category;
+use App\Model\Category;
 use App\Repository\CategoryRepository;
 use Core\Controller\CoreController;
 use Core\Http\Request;

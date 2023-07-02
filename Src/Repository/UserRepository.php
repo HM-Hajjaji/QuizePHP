@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\model\User;
+use App\Model\User;
 use Core\Database\CoreRepository;
 use PDO;
 

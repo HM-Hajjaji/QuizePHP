@@ -59,7 +59,7 @@ if (!function_exists("viewPath"))
      */
     function viewPath():string
     {
-        return basePath() . "/view/";
+        return basePath() . "/View/";
     }
 }
 

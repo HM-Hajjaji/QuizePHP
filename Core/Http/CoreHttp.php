@@ -40,29 +40,20 @@ abstract class CoreHttp
      */
     public function path(string $path, array $params=[]):string|bool
     {
-        $url = false;
-        foreach (self::$routes as $method)
-        {
-            foreach (array_keys($method) as $pathName)
-            {
-                if ($pathName== $path)
-                {
+        foreach (self::$routes as $method) {
+            foreach (array_keys($method) as $pathName) {
+                if ($pathName == $path) {
                     $url = $method[$path]["url"];
-                    break 2;
+                    foreach (explode("/", $url) as $segment) {
+                        if (preg_match('/\{(\w+)\}/', $segment, $match)) {
+                            $url = str_replace($match[0], $params[$match[1]], $url);
+                        }
+                    }
+                    return $url;
                 }
             }
         }
-        if (!$url)
-        {
-            return false;
-        }
-        foreach (explode("/",$url) as $segment) {
-            if (preg_match('/\{(\w+)\}/', $segment,$match))
-            {
-                $url = str_replace($match[0],$params[$match[1]],$url);
-            }
-        }
-        return $url;
+        return false;
     }
 
     /**
@@ -75,8 +66,9 @@ abstract class CoreHttp
      */
     protected function handler(string $path, string $url, array|callable $action, string $method = "get"|"post"):void
     {
-        $path = trim($path);$url = trim($url);
-        $url = !str_ends_with($url,"/") ? $url .= "/":$url;
+        $path = trim($path);
+        $url = trim($url);
+        $url = !str_ends_with($url,"/") ? $url."/":$url;
         self::$routes[$method][$path] = ['url' => trim($url),"action" => $action];
     }
 
@@ -89,7 +81,7 @@ abstract class CoreHttp
     protected function execute(string $method, string $url):void
     {
         $routes = self::$routes[$method] ?? [];
-        $url = !str_ends_with($url,"/") ? $url .= "/":$url;
+        $url = !str_ends_with($url,"/") ? $url."/":$url;
         foreach ($routes as $route)
         {
             $params = $this->matchPath($route['url'],$url);

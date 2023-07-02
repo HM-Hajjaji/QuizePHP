@@ -61,9 +61,13 @@ class CategoryRepository extends CoreRepository
         return $statement->execute();
     }
 
-    public function update(object $model)
+    public function update(object $model):bool
     {
-        // TODO: Implement update() method.
+        $query = "UPDATE $this->tableName SET title = :title WHERE id = :id";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindValue("title",$model->getTitle());
+        $statement->bindValue("id",$model->getId());
+        return $statement->execute();
     }
 
     public function remove(int $id):bool

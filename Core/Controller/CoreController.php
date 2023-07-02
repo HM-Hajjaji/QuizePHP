@@ -3,6 +3,7 @@
 namespace Core\Controller;
 
 use Core\Http\Response;
+use JetBrains\PhpStorm\NoReturn;
 
 abstract class CoreController
 {
@@ -26,10 +27,10 @@ abstract class CoreController
         return ob_get_clean();
     }
 
-    public function redirectTo(string $path):void
+    #[NoReturn] public function redirectTo(string $path, array $params=[]):void
     {
         route()->getRequest()->setMethod("GET");
-        header("location:".path($path));
+        header("location:".path($path,$params));
         exit();
     }
 }

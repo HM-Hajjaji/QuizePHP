@@ -12,6 +12,7 @@ route()->get("app_admin_home","/admin",[HomeController::class,"index"]);
     //category
 route()->get("app_admin_category","/admin/category",[CategoryController::class,"index"]);
 route()->match("app_admin_category_new","/admin/category/new",[CategoryController::class,"new"]);
+route()->match("app_admin_category_edit","/admin/category/{id}/edit",[CategoryController::class,"edit"]);
 route()->get("app_admin_category_show","/admin/category/{id}/show",[CategoryController::class,"show"]);
 route()->post("app_admin_category_delete","/admin/category/{id}/delete",[CategoryController::class,"delete"]);
 

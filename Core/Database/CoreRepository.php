@@ -12,9 +12,9 @@ abstract class CoreRepository
         $this->database = core()->getDatabase();
     }
 
-    abstract public function all();
+    abstract public function all():array;
     abstract public function find(int $id):object;
-    abstract public function add(object $model);
-    abstract public function update(object $model);
-    abstract public function remove(int $id);
+    abstract public function add(object $model):bool;
+    abstract public function update(object $model):bool;
+    abstract public function remove(int $id):bool;
 }

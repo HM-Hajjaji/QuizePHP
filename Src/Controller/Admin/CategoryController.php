@@ -7,6 +7,7 @@ use App\Repository\CategoryRepository;
 use Core\Controller\CoreController;
 use Core\Http\Request;
 use Core\Http\Response;
+use JetBrains\PhpStorm\NoReturn;
 
 class CategoryController extends CoreController
 {
@@ -36,11 +37,23 @@ class CategoryController extends CoreController
         return $this->view("admin/category/new",['isCategory' => true]);
     }
 
+    public function edit(int $id):Response
+    {
+        $category = $this->categoryRepository->find($id);
+        if ($this->request->getMethod() == "post")
+        {
+            $category->setTitle($this->request->get("title"));
+            $this->categoryRepository->update($category);
+            $this->redirectTo("app_admin_category_show",['id' => $category->getId()]);
+        }
+        return $this->view("admin/category/edit",["category" => $category,'isCategory' => true]);
+    }
+
     public function show(int $id):Response
     {
         return $this->view("admin/category/show",['category' => $this->categoryRepository->find($id),'isCategory' => true]);
     }
-    public function delete(int $id):void
+    #[NoReturn] public function delete(int $id):void
     {
         $this->categoryRepository->remove($id);
         $this->redirectTo("app_admin_category");

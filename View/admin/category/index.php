@@ -28,6 +28,7 @@
                             <td><?=$category->getCreatedAt()->format("Y-m-d H:i")?></td>
                             <td>
                                 <a href="<?=path("app_admin_category_show",['id' => $category->getId()])?>" class="btn btn-primary"><i class="fas fa-info-circle"></i></a>
+                                <a href="<?=path("app_admin_category_edit",['id' => $category->getId()])?>" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                 <form class="d-inline" method="post" action="<?=path("app_admin_category_delete",['id' => $category->getId()])?>" onsubmit="return confirm('Are you sure you want to delete this item?')">
                                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                 </form>

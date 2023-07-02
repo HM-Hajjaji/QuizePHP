@@ -1,7 +1,7 @@
 <?php
-function box(string $mainText,string $subText,string $bg,string $icon)
+function box(string $mainText,string $subText,string $bg,string $icon):string
 {
-    return "
+    return <<<BOX
         <div class='col'>
             <div class='small-box $bg'>
                 <div class='inner'>
@@ -15,5 +15,5 @@ function box(string $mainText,string $subText,string $bg,string $icon)
                 <a href='#' class='small-box-footer'>More info <i class='fas fa-arrow-circle-right'></i></a>
             </div>
         </div>
-    ";
+    BOX;
 }

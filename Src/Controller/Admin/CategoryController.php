@@ -36,6 +36,10 @@ class CategoryController extends CoreController
         return $this->view("admin/category/new",['isCategory' => true]);
     }
 
+    public function show(int $id):Response
+    {
+        return $this->view("admin/category/show",['category' => $this->categoryRepository->find($id),'isCategory' => true]);
+    }
     public function delete(int $id):void
     {
         $this->categoryRepository->remove($id);

@@ -34,13 +34,19 @@ class CategoryRepository extends CoreRepository
         return $list;
     }
 
-    public function find(int $id)
+    public function find(int $id):object
     {
         $query = "SELECT * FROM $this->tableName WHERE id=:id";
         $statement =$this->pdo->prepare($query);
         $statement->bindValue(":id",$id);
         $statement->execute();
         $model = $statement->fetch();
+
+        $object = new Category();
+        $object->setId($model->id);
+        $object->setTitle($model->title);
+        $object->setCreatedAt(new \DateTimeImmutable($model->createdAt));
+        return $object;
     }
 
     public function add(object $model):bool

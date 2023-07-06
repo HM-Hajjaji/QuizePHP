@@ -7,6 +7,7 @@ use App\Repository\CategoryRepository;
 use Core\Controller\CoreController;
 use Core\Http\Request;
 use Core\Http\Response;
+use Core\Validation\CoreValidation;
 use JetBrains\PhpStorm\NoReturn;
 
 class CategoryController extends CoreController
@@ -27,12 +28,22 @@ class CategoryController extends CoreController
 
     public function new():Response
     {
-        if ($this->request->getMethod() == "post")
+        if ($this->request->getMethod() == "POST")
         {
-            $category = new Category();
-            $category->setTitle($this->request->get()['title']);
-            $this->categoryRepository->save($category);
-            $this->redirectTo("app_admin_category");
+            $data = $this->request->request->all();
+            $validator  = new CoreValidation($data);
+            $validator->required(array_keys($data))
+                ->between("title",3,10);
+
+            if ($validator->isValid())
+            {
+                $category = new Category();
+                $category->setTitle($this->request->get($data['title']));
+                $this->categoryRepository->save($category);
+                $this->redirectTo("app_admin_category");
+            }else{
+                return $this->view("admin/category/new",['isCategory' => true,'errors' => $validator->getErrors(),'old' => $data]);
+            }
         }
         return $this->view("admin/category/new",['isCategory' => true]);
     }
@@ -40,7 +51,7 @@ class CategoryController extends CoreController
     public function edit(int $id):Response
     {
         $category = $this->categoryRepository->find($id);
-        if ($this->request->getMethod() == "post")
+        if ($this->request->getMethod() == "POST")
         {
             $category->setTitle($this->request->get("title"));
             $this->categoryRepository->save($category);

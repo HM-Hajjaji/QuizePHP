@@ -9,8 +9,7 @@ abstract class CoreController
 {
     protected function view(string $view,array $data = []):Response
     {
-        $response = route()->getResponse();
-        return $response($this->renderView($view,$data));
+        return route()->getResponse()->setContent($this->renderView($view,$data))->send();
     }
 
     private function renderView(string $path, array $data): string

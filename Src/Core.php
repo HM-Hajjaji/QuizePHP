@@ -17,7 +17,7 @@ final class Core
 
     public function __construct()
     {
-        $this->route = new Route(new Request(),new Response());
+        $this->route = new Route(Request::createFromGlobals(),new Response());
     }
 
     public function run():void

@@ -64,7 +64,7 @@ abstract class CoreHttp
      * @param string $method
      * @return void
      */
-    protected function handler(string $path, string $url, array|callable $action, string $method = "get"|"post"):void
+    protected function handler(string $path, string $url, array|callable $action, string $method = "GET"|"POST"):void
     {
         $path = trim($path);
         $url = trim($url);
@@ -93,7 +93,7 @@ abstract class CoreHttp
         }
         $this->response->setStatusCode(404);
         $this->response->setContent('404 - Page Not Found');
-        $this->response->render();
+        $this->response->send();
     }
 
     /**

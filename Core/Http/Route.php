@@ -18,7 +18,7 @@ class Route extends CoreHttp
      */
     public function get(string $path, string $url, array|callable $action):self
     {
-        $this->handler($path,$url,$action,"get");
+        $this->handler($path,$url,$action,"GET");
         return $this;
     }
 
@@ -31,7 +31,7 @@ class Route extends CoreHttp
      */
     public function post(string $path,string $url,array|callable $action):self
     {
-        $this->handler($path,$url,$action,"post");
+        $this->handler($path,$url,$action,"POST");
         return $this;
     }
 
@@ -54,6 +54,6 @@ class Route extends CoreHttp
      */
     public function resolve():void
     {
-        $this->execute($this->request->getMethod(),$this->request->getURL());
+        $this->execute($this->request->getMethod(),$this->request->getPathInfo());
     }
 }

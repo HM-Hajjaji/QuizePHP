@@ -2,6 +2,7 @@
 
 use App\Core;
 use Core\Http\Route;
+use Doctrine\ORM\EntityManager;
 
 //main function
 if (!function_exists("core"))
@@ -22,6 +23,14 @@ if (!function_exists("route"))
     function route():Route
     {
        return core()->getRoute();
+    }
+}
+
+if (!function_exists("entityManager"))
+{
+    function entityManager():EntityManager
+    {
+        return core()->getEntityManager();
     }
 }
 

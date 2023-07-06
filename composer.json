@@ -16,6 +16,8 @@
     "require": {
         "vlucas/phpdotenv": "^5.5",
         "symfony/var-dumper": "^6.3",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "doctrine/orm": "^2.15",
+        "symfony/cache": "^6.3"
     }
 }

@@ -11,18 +11,18 @@ use JetBrains\PhpStorm\NoReturn;
 
 class CategoryController extends CoreController
 {
-    private CategoryRepository $categoryRepository;
     private Request $request;
+    private CategoryRepository $categoryRepository;
 
     public function __construct()
     {
-        $this->categoryRepository = new CategoryRepository();
         $this->request = core()->getRoute()->getRequest();
+        $this->categoryRepository = new CategoryRepository();
     }
 
     public function index():Response
     {
-        return $this->view("admin/category/index",['isCategory' => true,"categorys" => $this->categoryRepository->all()]);
+        return $this->view("admin/category/index",['isCategory' => true,"categorys" => $this->categoryRepository->findAll()]);
     }
 
     public function new():Response
@@ -31,7 +31,7 @@ class CategoryController extends CoreController
         {
             $category = new Category();
             $category->setTitle($this->request->get()['title']);
-            $this->categoryRepository->add($category);
+            $this->categoryRepository->save($category);
             $this->redirectTo("app_admin_category");
         }
         return $this->view("admin/category/new",['isCategory' => true]);
@@ -43,7 +43,7 @@ class CategoryController extends CoreController
         if ($this->request->getMethod() == "post")
         {
             $category->setTitle($this->request->get("title"));
-            $this->categoryRepository->update($category);
+            $this->categoryRepository->save($category);
             $this->redirectTo("app_admin_category_show",['id' => $category->getId()]);
         }
         return $this->view("admin/category/edit",["category" => $category,'isCategory' => true]);
@@ -55,7 +55,7 @@ class CategoryController extends CoreController
     }
     #[NoReturn] public function delete(int $id):void
     {
-        $this->categoryRepository->remove($id);
+        $this->categoryRepository->remove($this->categoryRepository->find($id));
         $this->redirectTo("app_admin_category");
     }
 }

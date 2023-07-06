@@ -2,18 +2,18 @@
 
 namespace App;
 
-use App\Database\MySql;
-use Core\Database\CoreDatabase;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Http\Route;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\ORMSetup;
 use Dotenv\Dotenv;
-use PDO;
+use Doctrine\ORM\EntityManager;
 
-class Core
+final class Core
 {
     private Route $route;
-    private CoreDatabase $database;
+    private EntityManager $entityManager;
 
     public function __construct()
     {
@@ -23,10 +23,7 @@ class Core
     public function run():void
     {
         Dotenv::createImmutable(basePath())->load();
-        $this->database = new MySql("localhost",env("DB_NAME"), env("DB_USER","root"),env("DB_PASSWORD",""),[
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
-        ]);
+        $this->entityManager = $this->handleEntityManager();
         $this->route->resolve();
     }
 
@@ -40,11 +37,24 @@ class Core
     }
 
     /**
-     * @return CoreDatabase
+     * @return EntityManager
      */
-    public function getDatabase(): CoreDatabase
+    public function getEntityManager(): EntityManager
     {
-        return $this->database;
+        return $this->entityManager;
+    }
+
+
+    private function handleEntityManager():EntityManager
+    {
+        $config = ORMSetup::createAttributeMetadataConfiguration([basePath()."/Src"],true);
+        $connection = DriverManager::getConnection([
+            'driver'   => env("DB_DRIVER","pdo_mysql"),
+            'user'     => env("DB_USERNAME","root"),
+            'password' => env("DB_PASSWORD",""),
+            'dbname'   => env("DB_NAME","db"),
+        ], $config);
+        return new EntityManager($connection, $config);
     }
 
 }

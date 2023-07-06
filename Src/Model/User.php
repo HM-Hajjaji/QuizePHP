@@ -3,14 +3,30 @@
 namespace App\Model;
 
 use Core\Util\HashInterface;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
+#[ORM\Table(name: "user")]
 class User implements HashInterface
 {
+    #[ORM\Id]
+    #[ORM\Column(type: "integer")]
+    #[ORM\GeneratedValue]
     private int $id;
+
+    #[ORM\Column(type: 'string')]
     private string $name;
+
+    #[ORM\Column(type: 'string')]
     private string $username;
+
+    #[ORM\Column(type: 'string')]
     private string $password;
+
+    #[ORM\Column(type: 'json',nullable: true)]
     private array $types;
+
+    #[ORM\Column(type: "datetime_immutable")]
     private \DateTimeImmutable $createdAt;
 
     /**

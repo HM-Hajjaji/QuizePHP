@@ -5,6 +5,7 @@ namespace App;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Http\Route;
+use Core\Validation\Validator;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\ORMSetup;
 use Dotenv\Dotenv;
@@ -15,9 +16,12 @@ final class Core
     private Route $route;
     private EntityManager $entityManager;
 
+    private Validator $validator;
+
     public function __construct()
     {
         $this->route = new Route(Request::createFromGlobals(),new Response());
+        $this->validator = new Validator();
     }
 
     public function run():void
@@ -44,6 +48,13 @@ final class Core
         return $this->entityManager;
     }
 
+    /**
+     * @return Validator
+     */
+    public function getValidator(): Validator
+    {
+        return $this->validator;
+    }
 
     private function handleEntityManager():EntityManager
     {

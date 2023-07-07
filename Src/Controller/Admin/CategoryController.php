@@ -7,7 +7,6 @@ use App\Repository\CategoryRepository;
 use Core\Controller\CoreController;
 use Core\Http\Request;
 use Core\Http\Response;
-use Core\Validation\CoreValidation;
 use JetBrains\PhpStorm\NoReturn;
 
 class CategoryController extends CoreController
@@ -31,18 +30,21 @@ class CategoryController extends CoreController
         if ($this->request->getMethod() == "POST")
         {
             $data = $this->request->request->all();
-            $validator  = new CoreValidation($data);
-            $validator->required(array_keys($data))
-                ->between("title",3,10);
 
-            if ($validator->isValid())
+            validator()->setData($data)
+                ->required(array_keys($data))
+                ->min("title",3)
+            ;
+
+            if (validator()->isValid())
             {
                 $category = new Category();
-                $category->setTitle($this->request->get($data['title']));
+                $cleanData = validator()->getCleanData();
+                $category->setTitle($cleanData['title']);
                 $this->categoryRepository->save($category);
                 $this->redirectTo("app_admin_category");
             }else{
-                return $this->view("admin/category/new",['isCategory' => true,'errors' => $validator->getErrors(),'old' => $data]);
+                return $this->view("admin/category/new",['isCategory' => true,'errors' => validator()->getErrors(),'old' => $data]);
             }
         }
         return $this->view("admin/category/new",['isCategory' => true]);
@@ -53,9 +55,21 @@ class CategoryController extends CoreController
         $category = $this->categoryRepository->find($id);
         if ($this->request->getMethod() == "POST")
         {
-            $category->setTitle($this->request->get("title"));
-            $this->categoryRepository->save($category);
-            $this->redirectTo("app_admin_category_show",['id' => $category->getId()]);
+            $data = $this->request->request->all();
+
+            validator()->setData($data)
+                ->required(array_keys($data))
+                ->min("title",3)
+            ;
+            if (validator()->isValid())
+            {
+                $cleanData = validator()->getCleanData();
+                $category->setTitle($cleanData['title']);
+                $this->categoryRepository->save($category);
+                $this->redirectTo("app_admin_category_show",['id' => $category->getId()]);
+            }else{
+                return $this->view("admin/category/edit",["category" => $category,'errors' => validator()->getErrors(),'old' => $data,'isCategory' => true]);
+            }
         }
         return $this->view("admin/category/edit",["category" => $category,'isCategory' => true]);
     }

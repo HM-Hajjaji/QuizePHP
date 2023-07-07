@@ -2,11 +2,19 @@
 
 namespace Core\Controller;
 
+use Core\Http\Request;
 use Core\Http\Response;
 use JetBrains\PhpStorm\NoReturn;
 
 abstract class CoreController
 {
+    protected Request $request;
+
+    public function __construct()
+    {
+        $this->request = core()->getRoute()->getRequest();
+    }
+
     protected function view(string $view,array $data = []):Response
     {
         return route()->getResponse()->setContent($this->renderView($view,$data))->send();

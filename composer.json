@@ -19,6 +19,7 @@
         "ext-pdo": "*",
         "doctrine/orm": "^2.15",
         "symfony/cache": "^6.3",
-        "symfony/http-foundation": "^6.3"
+        "symfony/http-foundation": "^6.3",
+        "symfony/console": "^6.3"
     }
 }

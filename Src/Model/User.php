@@ -29,20 +29,9 @@ class User implements HashInterface
     #[ORM\Column(type: "datetime_immutable")]
     private \DateTimeImmutable $createdAt;
 
-    /**
-     * @param string $name
-     * @param string $username
-     * @param string $password
-     * @param array $types
-     */
-    public function __construct(int $id = null,string $name, string $username, string $password, array $types,\DateTimeImmutable $createdAt)
+    public function __construct()
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->username = $username;
-        $this->password = $password;
-        $this->types = $types;
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function __toString(): string

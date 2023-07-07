@@ -18,7 +18,6 @@ final class Core
     private EntityManager $entityManager;
     private Validator $validator;
     private Template $template;
-
     public function __construct()
     {
         $this->route = new Route(Request::createFromGlobals(),new Response());

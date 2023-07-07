@@ -5,18 +5,16 @@ namespace App\Controller\Admin;
 use App\Model\Category;
 use App\Repository\CategoryRepository;
 use Core\Controller\CoreController;
-use Core\Http\Request;
 use Core\Http\Response;
 use JetBrains\PhpStorm\NoReturn;
 
 class CategoryController extends CoreController
 {
-    private Request $request;
     private CategoryRepository $categoryRepository;
 
     public function __construct()
     {
-        $this->request = core()->getRoute()->getRequest();
+        parent::__construct();
         $this->categoryRepository = new CategoryRepository();
     }
 

@@ -2,6 +2,7 @@
 
 use App\Core;
 use Core\Http\Route;
+use Core\Template\Template;
 use Core\Validation\Validator;
 use Doctrine\ORM\EntityManager;
 
@@ -40,6 +41,14 @@ if (!function_exists("validator"))
     function validator():Validator
     {
         return core()->getValidator();
+    }
+}
+
+if (!function_exists("template"))
+{
+    function template():Template
+    {
+        return core()->getTemplate();
     }
 }
 

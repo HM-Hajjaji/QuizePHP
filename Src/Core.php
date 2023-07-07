@@ -5,6 +5,7 @@ namespace App;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Http\Route;
+use Core\Template\Template;
 use Core\Validation\Validator;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\ORMSetup;
@@ -15,13 +16,14 @@ final class Core
 {
     private Route $route;
     private EntityManager $entityManager;
-
     private Validator $validator;
+    private Template $template;
 
     public function __construct()
     {
         $this->route = new Route(Request::createFromGlobals(),new Response());
         $this->validator = new Validator();
+        $this->template = new Template();
     }
 
     public function run():void
@@ -54,6 +56,14 @@ final class Core
     public function getValidator(): Validator
     {
         return $this->validator;
+    }
+
+    /**
+     * @return Template
+     */
+    public function getTemplate(): Template
+    {
+        return $this->template;
     }
 
     private function handleEntityManager():EntityManager

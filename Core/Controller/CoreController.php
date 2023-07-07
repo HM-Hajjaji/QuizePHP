@@ -14,16 +14,12 @@ abstract class CoreController
 
     private function renderView(string $path, array $data): string
     {
-        $viewBaseContent = $this->renderViewContent(viewPath() . "base/base.php", $data);
-        return str_replace("{{body}}",$this->renderViewContent(viewPath() . $path . ".php", $data),$viewBaseContent);
-    }
-
-    private function renderViewContent(string $viewPath, array $data): string
-    {
         extract($data);
         ob_start();
-            include_once $viewPath;
-        return ob_get_clean();
+            include_once sprintf(viewPath()."%s.php",$path);
+        $body = ob_get_clean();
+        template()->assign("body",$body);
+        return template()->render($data);
     }
 
     #[NoReturn] public function redirectTo(string $path, array $params=[]):void

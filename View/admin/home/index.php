@@ -1,6 +1,10 @@
 <?php
+template()->extends("base-admin");
+template()->assign("title","Home");
+
 include_once viewPath()."tools/box.php";
 ?>
+
 <div class="row row-cols-lg-4">
     <?=box("150","New Orders","bg-info","fa-user")?>
     <?=box("53","Bounce Rat","bg-success","fa-user")?>

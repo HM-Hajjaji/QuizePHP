@@ -3,8 +3,8 @@
     "description": "applicaton quize web",
     "autoload": {
         "psr-4": {
-            "App\\": "Src/",
-            "Core\\": "Core/"
+            "App\\": "source/",
+            "Core\\": "core/"
         }
     },
     "authors": [

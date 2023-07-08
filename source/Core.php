@@ -68,7 +68,7 @@ final class Core
 
     private function handleEntityManager():EntityManager
     {
-        $config = ORMSetup::createAttributeMetadataConfiguration([basePath()."/Src"],true);
+        $config = ORMSetup::createAttributeMetadataConfiguration([basePath()."/Source"],true);
         $connection = DriverManager::getConnection((new DsnParser(['mysql' => "mysqli"]))->parse(env("DATABASE_URL")));
         return new EntityManager($connection, $config);
     }

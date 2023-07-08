@@ -86,7 +86,7 @@ if (!function_exists("viewPath"))
      */
     function viewPath():string
     {
-        return basePath() . "/View/";
+        return basePath() . "/view/";
     }
 }
 

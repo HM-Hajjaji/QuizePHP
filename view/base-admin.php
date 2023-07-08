@@ -13,7 +13,7 @@
 <div class="wrapper">
     <?php
     include_once viewPath()."admin/include/header.php";
-    include_once viewPath()."admin/include//sidebar.php";
+    include_once viewPath()."admin/include/sidebar.php";
     ?>
     <div class="content-wrapper">
         <!--<div class="content-header">

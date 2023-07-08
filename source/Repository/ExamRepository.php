@@ -2,23 +2,23 @@
 
 namespace App\Repository;
 
-use App\Model\Quiz;
+use App\Model\Exam;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 
-class QuizRepository extends EntityRepository
+class ExamRepository extends EntityRepository
 {
     public function __construct()
     {
-        parent::__construct(entityManager(),entityManager()->getClassMetadata(Quiz::class));
+        parent::__construct(entityManager(),entityManager()->getClassMetadata(Exam::class));
     }
 
     /**
      * @throws OptimisticLockException
      * @throws ORMException
      */
-    public function save(Quiz $object):void
+    public function save(Exam $object):void
     {
         entityManager()->persist($object);
         entityManager()->flush();
@@ -28,7 +28,7 @@ class QuizRepository extends EntityRepository
      * @throws OptimisticLockException
      * @throws ORMException
      */
-    public function remove(Quiz $object):void
+    public function remove(Exam $object):void
     {
         entityManager()->remove($object);
         entityManager()->flush();

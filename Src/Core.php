@@ -26,11 +26,11 @@ final class Core
         $this->template = new Template();
     }
 
-    public function run(bool $isRun):void
+    public function run(bool $isResolve):void
     {
         Dotenv::createImmutable(basePath())->load();
         $this->entityManager = $this->handleEntityManager();
-        $this->route->resolve($isRun);
+        $this->route->resolve($isResolve);
     }
 
     /**

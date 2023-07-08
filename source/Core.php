@@ -8,7 +8,9 @@ use Core\Http\Route;
 use Core\Template\Template;
 use Core\Validation\Validator;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Tools\DsnParser;
+use Doctrine\ORM\Exception\MissingMappingDriverImplementation;
 use Doctrine\ORM\ORMSetup;
 use Dotenv\Dotenv;
 use Doctrine\ORM\EntityManager;
@@ -66,9 +68,13 @@ final class Core
         return $this->template;
     }
 
+    /**
+     * @throws MissingMappingDriverImplementation
+     * @throws Exception
+     */
     private function handleEntityManager():EntityManager
     {
-        $config = ORMSetup::createAttributeMetadataConfiguration([basePath()."/Source"],true);
+        $config = ORMSetup::createAttributeMetadataConfiguration([basePath()."/source"],true);
         $connection = DriverManager::getConnection((new DsnParser(['mysql' => "mysqli"]))->parse(env("DATABASE_URL")));
         return new EntityManager($connection, $config);
     }

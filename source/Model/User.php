@@ -3,6 +3,8 @@
 namespace App\Model;
 
 use Core\Util\HashInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -29,8 +31,12 @@ class User implements HashInterface
     #[ORM\Column(type: "datetime_immutable")]
     private \DateTimeImmutable $createdAt;
 
+    #[ORM\OneToMany(mappedBy: "user",targetEntity: Exam::class)]
+    private Collection $listExam;
+
     public function __construct()
     {
+        $this->listExam = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -119,6 +125,35 @@ class User implements HashInterface
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getListExam(): Collection
+    {
+        return $this->listExam;
+    }
+
+    public function addListExam(Exam $exam): self
+    {
+        if (!$this->listExam->contains($exam))
+        {
+            $this->listExam->add($exam);
+            $exam->setUser($this);
+        }
+        return $this;
+    }
+
+    public function removeListExam(Exam $exam)
+    {
+        if ($this->listExam->removeElement($exam))
+        {
+            if ($exam->getUser() === $this)
+            {
+                $exam->setUser(null);
+            }
+        }
     }
 
     public function hash(string $password, $algo = PASSWORD_BCRYPT): string

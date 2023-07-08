@@ -21,12 +21,15 @@ class Category
     #[ORM\Column(type: "datetime_immutable")]
     private \DateTimeImmutable $createdAt;
 
-    #[ORM\OneToMany(targetEntity: Quiz::class,mappedBy: "category")]
+    #[ORM\OneToMany(mappedBy: "category", targetEntity: Quiz::class)]
     private Collection $listQuiz;
 
+    #[ORM\OneToMany(mappedBy: "category", targetEntity: Exam::class)]
+    private Collection $listExam;
     public function __construct()
     {
         $this->listQuiz = new ArrayCollection();
+        $this->listExam = new ArrayCollection();
         $this->setCreatedAt(new \DateTimeImmutable());
     }
 
@@ -93,6 +96,36 @@ class Category
             if ($quiz->getCategory() === $this)
             {
                 $quiz->setCategory(null);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getListExam(): Collection
+    {
+        return $this->listExam;
+    }
+
+    public function addListExam(Exam $exam): self
+    {
+        if (!$this->listExam->contains($exam))
+        {
+            $this->listExam->add($exam);
+            $exam->setCategory($this);
+        }
+        return $this;
+    }
+
+    public function removeListExam(Exam $exam):self
+    {
+        if ($this->listExam->removeElement($exam))
+        {
+            if ($exam->getCategory() === $this)
+            {
+                $exam->setCategory(null);
             }
         }
         return $this;

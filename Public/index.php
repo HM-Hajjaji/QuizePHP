@@ -7,4 +7,4 @@ require_once basePath()."/vendor/autoload.php";
 //system route
 require_once basePath()."/Route/web.php";
 //run core of project
-core()->run();
+core()->run(true);

@@ -8,6 +8,7 @@ use Core\Http\Route;
 use Core\Template\Template;
 use Core\Validation\Validator;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Tools\DsnParser;
 use Doctrine\ORM\ORMSetup;
 use Dotenv\Dotenv;
 use Doctrine\ORM\EntityManager;
@@ -25,11 +26,11 @@ final class Core
         $this->template = new Template();
     }
 
-    public function run():void
+    public function run(bool $isRun):void
     {
         Dotenv::createImmutable(basePath())->load();
         $this->entityManager = $this->handleEntityManager();
-        $this->route->resolve();
+        $this->route->resolve($isRun);
     }
 
     /**
@@ -68,12 +69,7 @@ final class Core
     private function handleEntityManager():EntityManager
     {
         $config = ORMSetup::createAttributeMetadataConfiguration([basePath()."/Src"],true);
-        $connection = DriverManager::getConnection([
-            'driver'   => env("DB_DRIVER","pdo_mysql"),
-            'user'     => env("DB_USERNAME","root"),
-            'password' => env("DB_PASSWORD",""),
-            'dbname'   => env("DB_NAME","db"),
-        ], $config);
+        $connection = DriverManager::getConnection((new DsnParser(['mysql' => "mysqli"]))->parse(env("DATABASE_URL")));
         return new EntityManager($connection, $config);
     }
 

@@ -52,8 +52,11 @@ class Route extends CoreHttp
      * the function for run result of url
      * @return void
      */
-    public function resolve():void
+    public function resolve(bool $isResolve):void
     {
-        $this->execute($this->request->getMethod(),$this->request->getPathInfo());
+        if ($isResolve)
+        {
+            $this->execute($this->request->getMethod(),$this->request->getPathInfo());
+        }
     }
 }

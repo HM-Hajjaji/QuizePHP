@@ -1,8 +1,15 @@
 #!/usr/bin/env php
 <?php
-use Symfony\Component\Console\Application;
 
-require_once dirname(__DIR__) . "/vendor/autoload.php";
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 
-$application = new Application("App\\Cre");
-$application->run();
+if (!is_file(dirname(__DIR__)."/vendor/autoload.php"))
+{
+    throw new LogicException("please install composer");
+}
+require_once dirname(__DIR__) . "/Core/Helper/CoreHelper.php";
+require_once basePath()."/vendor/autoload.php";
+core()->run(false);
+
+ConsoleRunner::run(new SingleManagerProvider(entityManager()));

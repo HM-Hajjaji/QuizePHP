@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Model;
+use App\Repository\QuizRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: QuizRepository::class)]
 #[ORM\Table(name: "quiz")]
 class Quiz
 {

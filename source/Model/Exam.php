@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Model;
+use App\Repository\ExamRepository;
 use Doctrine\ORM\Mapping as ORM;
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: ExamRepository::class)]
 #[ORM\Table(name: 'exam')]
 class Exam
 {

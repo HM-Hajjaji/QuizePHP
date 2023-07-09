@@ -2,22 +2,14 @@
 
 namespace Core\Controller;
 
-use Core\Http\Request;
 use Core\Http\Response;
 use JetBrains\PhpStorm\NoReturn;
 
 abstract class CoreController
 {
-    protected Request $request;
-
-    public function __construct()
-    {
-        $this->request = core()->getRoute()->getRequest();
-    }
-
     protected function view(string $view,array $data = []):Response
     {
-        return route()->getResponse()->setContent($this->renderView($view,$data))->send();
+        return response()->setContent($this->renderView($view,$data))->send();
     }
 
     private function renderView(string $path, array $data): string
@@ -32,7 +24,7 @@ abstract class CoreController
 
     #[NoReturn] public function redirectTo(string $path, array $params=[]):void
     {
-        route()->getRequest()->setMethod("GET");
+        request()->setMethod("GET");
         header("location:".path($path,$params));
         exit();
     }

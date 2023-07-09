@@ -2,61 +2,48 @@
 
 namespace Core\Http;
 
-class Route extends CoreHttp
+use Attribute;
+
+#[Attribute]
+final class Route
 {
-    public function __construct(Request $request,Response $response)
-    {
-        parent::__construct($request,$response);
-    }
+    private string $name;
+    private string $path;
+    private string|array $method;
 
     /**
-     * the function for access to url by method get
+     * @param string $name
      * @param string $path
-     * @param string $url
-     * @param array|callable $action
-     * @return $this
+     * @param string|array $method
      */
-    public function get(string $path, string $url, array|callable $action):self
+    public function __construct(string $name, string $path, string|array $method="GET")
     {
-        $this->handler($path,$url,$action,"GET");
-        return $this;
+        $this->name = $name;
+        $this->path = $path;
+        $this->method = $method;
     }
 
     /**
-     * the function for access to url by method post
-     * @param string $path
-     * @param string $url
-     * @param array|callable $action
-     * @return $this
+     * @return string
      */
-    public function post(string $path,string $url,array|callable $action):self
+    public function getName(): string
     {
-        $this->handler($path,$url,$action,"POST");
-        return $this;
+        return $this->name;
     }
 
     /**
-     * the function for access to url by method get and post
-     * @param string $path
-     * @param string $url
-     * @param array|callable $action
-     * @return $this
+     * @return string
      */
-    public function match(string $path,string $url,array|callable $action):self
+    public function getPath(): string
     {
-        $this->get($path,$url,$action)->post($path,$url,$action);
-        return $this;
+        return $this->path;
     }
 
     /**
-     * the function for run result of url
-     * @return void
+     * @return array|string
      */
-    public function resolve(bool $isResolve):void
+    public function getMethod(): array|string
     {
-        if ($isResolve)
-        {
-            $this->execute($this->request->getMethod(),$this->request->getPathInfo());
-        }
+        return $this->method;
     }
 }

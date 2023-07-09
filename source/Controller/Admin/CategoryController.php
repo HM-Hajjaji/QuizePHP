@@ -6,6 +6,7 @@ use App\Model\Category;
 use App\Repository\CategoryRepository;
 use Core\Controller\CoreController;
 use Core\Http\Response;
+use Core\Http\Route;
 use JetBrains\PhpStorm\NoReturn;
 
 class CategoryController extends CoreController
@@ -14,20 +15,21 @@ class CategoryController extends CoreController
 
     public function __construct()
     {
-        parent::__construct();
         $this->categoryRepository = new CategoryRepository();
     }
 
+    #[Route("app_admin_category","/admin/category")]
     public function index():Response
     {
         return $this->view("admin/category/index",['isCategory' => true,"categorys" => $this->categoryRepository->findAll()]);
     }
 
+    #[Route("app_admin_category_new","/admin/category/new",["GET","POST"])]
     public function new():Response
     {
-        if ($this->request->getMethod() == "POST")
+        if (request()->getMethod() == "POST")
         {
-            $data = $this->request->request->all();
+            $data = request()->request->all();
 
             validator()->setData($data)
                 ->required(array_keys($data))
@@ -48,12 +50,13 @@ class CategoryController extends CoreController
         return $this->view("admin/category/new",['isCategory' => true]);
     }
 
+    #[Route("app_admin_category_edit","/admin/category/{id}/edit",["GET","POST"])]
     public function edit(int $id):Response
     {
         $category = $this->categoryRepository->find($id);
-        if ($this->request->getMethod() == "POST")
+        if (request()->getMethod() == "POST")
         {
-            $data = $this->request->request->all();
+            $data = request()->request->all();
 
             validator()->setData($data)
                 ->required(array_keys($data))
@@ -72,11 +75,15 @@ class CategoryController extends CoreController
         return $this->view("admin/category/edit",["category" => $category,'isCategory' => true]);
     }
 
+    #[Route("app_admin_category_show","/admin/category/{id}/show")]
     public function show(int $id):Response
     {
         return $this->view("admin/category/show",['category' => $this->categoryRepository->find($id),'isCategory' => true]);
     }
-    #[NoReturn] public function delete(int $id):void
+
+    #[Route("app_admin_category_delete","/admin/category/{id}/delete","POST")]
+    #[NoReturn]
+    public function delete(int $id):void
     {
         $this->categoryRepository->remove($this->categoryRepository->find($id));
         $this->redirectTo("app_admin_category");

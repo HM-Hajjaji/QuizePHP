@@ -1,9 +1,12 @@
 <?php
+
 //using core helper functions
-require_once dirname(__DIR__) . "/core/Helper/CoreHelper.php";
+require_once dirname(__DIR__) . "/core/Helper/core.helper.php";
 //autoload
 require_once basePath()."/vendor/autoload.php";
-//system route
-require_once basePath()."/route/web.php";
 //run core of project
-core()->run(true);
+try {
+    core()->run(true);
+} catch (\Doctrine\DBAL\Exception|\Doctrine\ORM\Exception\MissingMappingDriverImplementation $e) {
+    dd($e->getMessage());
+}

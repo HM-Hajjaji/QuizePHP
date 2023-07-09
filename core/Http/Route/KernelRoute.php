@@ -1,74 +1,40 @@
 <?php
-namespace Core\Http;
-abstract class CoreHttp
+
+namespace Core\Http\Route;
+
+use JetBrains\PhpStorm\NoReturn;
+use ReflectionClass;
+use ReflectionException;
+
+abstract class KernelRoute
 {
     protected static array $routes = [];
-    protected Request $request;
-    protected Response $response;
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     */
-    public function __construct(Request $request, Response $response)
-    {
-        $this->request = $request;
-        $this->response = $response;
-    }
-
-    /**
-     * @return Request
-     */
-    public function getRequest(): Request
-    {
-        return $this->request;
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse(): Response
-    {
-        return $this->response;
-    }
-
-    /**
-     * the function for get url by path from list routes
-     * @param string $path
-     * @param array $params
-     * @return string|false
-     */
-    public function path(string $path, array $params=[]):string|bool
-    {
-        foreach (self::$routes as $method) {
-            foreach (array_keys($method) as $pathName) {
-                if ($pathName == $path) {
-                    $url = $method[$path]["url"];
-                    foreach (explode("/", $url) as $segment) {
-                        if (preg_match('/\{(\w+)\}/', $segment, $match)) {
-                            $url = str_replace($match[0], $params[$match[1]], $url);
-                        }
-                    }
-                    return $url;
-                }
-            }
-        }
-        return false;
-    }
 
     /**
      * the function for handler list routes by method get or post
      * @param string $path
      * @param string $url
      * @param array|callable $action
-     * @param string $method
+     * @param string|array $method
      * @return void
      */
-    protected function handler(string $path, string $url, array|callable $action, string $method = "GET"|"POST"):void
+    protected function handler(string $path, string $url, array|callable $action, string|array $method):void
     {
         $path = trim($path);
         $url = trim($url);
         $url = !str_ends_with($url,"/") ? $url."/":$url;
+        if (is_array($method))
+        {
+            if (isset($method[0]))
+            {
+                self::$routes[$method[0]][$path] = ['url' => trim($url),"action" => $action];
+            }
+            if (isset($method[1]))
+            {
+                self::$routes[$method[1]][$path] = ['url' => trim($url),"action" => $action];
+            }
+            return;
+        }
         self::$routes[$method][$path] = ['url' => trim($url),"action" => $action];
     }
 
@@ -78,7 +44,7 @@ abstract class CoreHttp
      * @param string $url
      * @return void
      */
-    protected function execute(string $method, string $url):void
+    #[NoReturn] protected function execute(string $method, string $url):void
     {
         $routes = self::$routes[$method] ?? [];
         $url = !str_ends_with($url,"/") ? $url."/":$url;
@@ -91,9 +57,9 @@ abstract class CoreHttp
                 return;
             }
         }
-        $this->response->setStatusCode(404);
-        $this->response->setContent('404 - Page Not Found');
-        $this->response->send();
+        response()->setStatusCode(404);
+        response()->setContent('404 - Page Not Found');
+        response()->send();
     }
 
     /**
@@ -141,5 +107,44 @@ abstract class CoreHttp
                 call_user_func_array(array(new $action[0],$action[1]),$params);
                 break;
         }
+    }
+
+    protected function handleControllers(string $path):array
+    {
+        $controllers = [];
+        $files = scandir($path);
+        foreach ($files as $file) {
+            if ($file == '.' || $file == '..') {
+                continue;
+            }
+            $pathFile = sprintf("%s/%s", $path, $file);
+            if (is_file($pathFile) && pathinfo($file, PATHINFO_EXTENSION) === "php") {
+                $content = file_get_contents($pathFile);
+                preg_match('/namespace\s+(.*?);/', $content, $namespaceMatches);
+                preg_match('/class\s+(\w+)/', $content, $classNameMatches);
+                if (isset($namespaceMatches[1]) && isset($classNameMatches[1])) {
+                    $controllers[] = $namespaceMatches[1] . "\\" . $classNameMatches[1];
+                }
+            } elseif (is_dir($pathFile)) {
+                foreach ($this->handleControllers($pathFile) as $class) {
+                    $controllers[] = $class;
+                }
+            }
+        }
+
+        return $controllers;
+    }
+
+    protected function handleReflections():array
+    {
+        $reflections = [];
+        foreach ($this->handleControllers(basePath()."/source/Controller") as $class)
+        {
+            try {
+                $reflections[] = new ReflectionClass($class);
+            } catch (ReflectionException $e) {
+            }
+        }
+        return $reflections;
     }
 }

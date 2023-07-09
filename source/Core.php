@@ -4,42 +4,51 @@ namespace App;
 
 use Core\Http\Request;
 use Core\Http\Response;
-use Core\Http\Route;
+use Core\Http\Route\CoreRoute;
 use Core\Template\Template;
 use Core\Validation\Validator;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Tools\DsnParser;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\MissingMappingDriverImplementation;
 use Doctrine\ORM\ORMSetup;
 use Dotenv\Dotenv;
-use Doctrine\ORM\EntityManager;
 
 final class Core
 {
-    private Route $route;
+    private CoreRoute $route;
     private EntityManager $entityManager;
     private Validator $validator;
     private Template $template;
+    private Request $request;
+    private Response $response;
     public function __construct()
     {
-        $this->route = new Route(Request::createFromGlobals(),new Response());
+        $this->route = new CoreRoute();
         $this->validator = new Validator();
         $this->template = new Template();
+        $this->request = Request::createFromGlobals();
+        $this->response = new Response();
     }
 
+    /**
+     * @throws MissingMappingDriverImplementation
+     * @throws Exception
+     */
     public function run(bool $isResolve):void
     {
         Dotenv::createImmutable(basePath())->load();
         $this->entityManager = $this->handleEntityManager();
+        $this->route->handleRoute();
         $this->route->resolve($isResolve);
     }
 
     /**
      * the function for get object route
-     * @return Route
+     * @return \Core\Http\Route\CoreRoute
      */
-    public function getRoute(): Route
+    public function getRoute(): CoreRoute
     {
         return $this->route;
     }
@@ -66,6 +75,22 @@ final class Core
     public function getTemplate(): Template
     {
         return $this->template;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return Response
+     */
+    public function getResponse(): Response
+    {
+        return $this->response;
     }
 
     /**

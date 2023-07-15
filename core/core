@@ -1,0 +1,9 @@
+#!/path/to/php
+<?php
+
+use Core\Console\Console;
+
+require_once dirname(__DIR__) . "/Core/Helper/core.helper.php";
+require_once basePath()."/vendor/autoload.php";
+$console  = new Console();
+$console->run($argc,$argv);

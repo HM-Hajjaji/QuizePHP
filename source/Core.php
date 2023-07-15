@@ -5,7 +5,6 @@ namespace App;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Http\Route\CoreRoute;
-use Core\Template\Template;
 use Core\Validation\Validator;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
@@ -20,14 +19,12 @@ final class Core
     private CoreRoute $route;
     private EntityManager $entityManager;
     private Validator $validator;
-    private Template $template;
     private Request $request;
     private Response $response;
     public function __construct()
     {
         $this->route = new CoreRoute();
         $this->validator = new Validator();
-        $this->template = new Template();
         $this->request = Request::createFromGlobals();
         $this->response = new Response();
     }
@@ -67,14 +64,6 @@ final class Core
     public function getValidator(): Validator
     {
         return $this->validator;
-    }
-
-    /**
-     * @return Template
-     */
-    public function getTemplate(): Template
-    {
-        return $this->template;
     }
 
     /**

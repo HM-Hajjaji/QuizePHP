@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="<?=urlBase().'asset/app.css'?>">
     <script defer src="<?=urlBase().'asset/app.js'?>" type="module"></script>
-    <title><?=$title??env("APP_NAME")?></title>
+    <title><?=block("title")?></title>
 </head>
 <body class="sidebar-mini">
 <div class="wrapper">
@@ -34,7 +34,7 @@
 
         <section class="content mt-2">
             <div class="container-fluid">
-                <?=$body?>
+                <?=block("body")?>
             </div>
         </section>
     </div>

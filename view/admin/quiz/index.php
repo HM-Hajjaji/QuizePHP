@@ -1,7 +1,8 @@
-<?php
-template()->extends("base-admin");
-template()->assign("title","Quiz");
-?>
+<?= inheritance("base-admin")?>
+
+<?=block("title")?>Quiz<?=endBlock("title")?>
+
+<?=block("body")?>
 <div class="card">
     <div class="card-header">
         <h3 class="card-title"><i class="fas fa-broom mr-2"></i>Quiz</h3>
@@ -23,3 +24,4 @@ template()->assign("title","Quiz");
         </table>
     </div>
 </div>
+<?=endBlock("body")?>

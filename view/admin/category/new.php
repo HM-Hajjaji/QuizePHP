@@ -1,7 +1,8 @@
-<?php
-template()->extends("base-admin");
-template()->assign("title","New Category");
-?>
+<?= inheritance("base-admin")?>
+
+<?=block("title")?>New Category<?=endBlock("title")?>
+
+<?=block("body")?>
 <div class="card">
     <div class="card-header d-flex flex-wrap py-2 align-items-center">
         <div class="col-sm-6">
@@ -30,3 +31,4 @@ template()->assign("title","New Category");
         </form>
     </div>
 </div>
+<?=endBlock("body")?>

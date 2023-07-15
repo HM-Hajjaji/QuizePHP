@@ -1,13 +1,12 @@
 <?php
 
 use App\Core;
-use Core\Template\Template;
 use Core\Validation\Validator;
 use Doctrine\ORM\EntityManager;
 
 require_once "http.helper.php";
 require_once "path.helper.php";
-
+require_once "engine.helper.php";
 //main function
 if (!function_exists("core"))
 {
@@ -36,14 +35,6 @@ if (!function_exists("validator"))
     function validator():Validator
     {
         return core()->getValidator();
-    }
-}
-
-if (!function_exists("template"))
-{
-    function template():Template
-    {
-        return core()->getTemplate();
     }
 }
 

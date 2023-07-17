@@ -56,7 +56,7 @@ final class CoreRoute extends KernelRoute
                          * @var Route $route
                          */
                         $route = $method->getAttributes()[0]->newInstance();
-                        $this->handler($route->getName(),$route->getPath(),[$method->class,$method->name],$route->getMethod());
+                        $this->handler($route->getName(),$route->getPath(),[$method->class,$method->name],$route->getMethods());
                     }
                 }
             }

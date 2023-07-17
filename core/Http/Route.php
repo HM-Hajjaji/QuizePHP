@@ -2,6 +2,7 @@
 
 namespace Core\Http;
 
+
 use Attribute;
 
 #[Attribute]
@@ -9,18 +10,18 @@ final class Route
 {
     private string $name;
     private string $path;
-    private string|array $method;
+    private string|array $methods;
 
     /**
      * @param string $name
      * @param string $path
-     * @param string|array $method
+     * @param string|array $methods
      */
-    public function __construct(string $name, string $path, string|array $method="GET")
+    public function __construct(string $name, string $path, string|array $methods="GET")
     {
         $this->name = $name;
         $this->path = $path;
-        $this->method = $method;
+        $this->methods = $methods;
     }
 
     /**
@@ -42,8 +43,8 @@ final class Route
     /**
      * @return array|string
      */
-    public function getMethod(): array|string
+    public function getMethods(): array|string
     {
-        return $this->method;
+        return $this->methods;
     }
 }

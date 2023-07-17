@@ -24,5 +24,11 @@ abstract class Command implements CommandInterface
     protected function error(string $error): void
     {
         echo PHP_EOL . "\033[31m ## Error : $error ##\033[0m" . PHP_EOL;
+        exit();
+    }
+
+    protected function nb(string $nb): string
+    {
+        return "\033[34m$nb\033[0m";
     }
 }

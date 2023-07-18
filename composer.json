@@ -20,6 +20,7 @@
         "doctrine/orm": "^2.15",
         "symfony/cache": "^6.3",
         "symfony/http-foundation": "^6.3",
-        "ext-readline": "*"
+        "ext-readline": "*",
+        "filp/whoops": "^2.15"
     }
 }

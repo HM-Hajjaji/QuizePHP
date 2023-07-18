@@ -7,6 +7,6 @@ require_once basePath()."/vendor/autoload.php";
 //run core of project
 try {
     core()->run(true);
-} catch (\Doctrine\DBAL\Exception|\Doctrine\ORM\Exception\MissingMappingDriverImplementation $e) {
-    dd($e->getMessage());
+} catch (\Doctrine\DBAL\Exception | \Doctrine\ORM\Exception\MissingMappingDriverImplementation $e) {
+    throw new Exception($e->getMessage());
 }

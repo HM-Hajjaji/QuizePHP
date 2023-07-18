@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\MissingMappingDriverImplementation;
 use Doctrine\ORM\ORMSetup;
 use Dotenv\Dotenv;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
 
 final class Core
 {
@@ -21,12 +23,14 @@ final class Core
     private Validator $validator;
     private Request $request;
     private Response $response;
+    private Run $whoops;
     public function __construct()
     {
         $this->route = new CoreRoute();
         $this->validator = new Validator();
         $this->request = Request::createFromGlobals();
         $this->response = new Response();
+        $this->whoops = new Run();
     }
 
     /**
@@ -36,6 +40,8 @@ final class Core
     public function run(bool $isResolve):void
     {
         Dotenv::createImmutable(basePath())->load();
+        $this->whoops->pushHandler(new PrettyPageHandler);
+        $this->whoops->register();
         $this->entityManager = $this->handleEntityManager();
         $this->route->handleRoute();
         $this->route->resolve($isResolve);
@@ -43,7 +49,7 @@ final class Core
 
     /**
      * the function for get object route
-     * @return \Core\Http\Route\CoreRoute
+     * @return CoreRoute
      */
     public function getRoute(): CoreRoute
     {

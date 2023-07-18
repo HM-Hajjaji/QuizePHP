@@ -43,6 +43,7 @@ abstract class KernelRoute
      * @param string $method
      * @param string $url
      * @return void
+     * @throws \Exception
      */
     #[NoReturn] protected function execute(string $method, string $url):void
     {
@@ -57,9 +58,10 @@ abstract class KernelRoute
                 return;
             }
         }
-        response()->setStatusCode(404);
+        throw new \Exception("Page Not Found");
+        /*response()->setStatusCode(404);
         response()->setContent('404 - Page Not Found');
-        response()->send();
+        response()->send();*/
     }
 
     /**

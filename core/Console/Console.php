@@ -10,14 +10,9 @@ class Console
 {
     private array $commands=[];
 
-    /**
-     * @throws MissingMappingDriverImplementation
-     * @throws Exception
-     */
     public function __construct()
     {
         $this->resolve();
-        core()->run(false);
     }
 
     public function run(int $count,array $arguments): void

@@ -4,11 +4,10 @@ namespace App\Controller\Admin;
 
 use Core\Controller\CoreController;
 use Core\Http\Response;
-use Core\Http\Route;
-
+use Route\Route;
 class SettingController extends CoreController
 {
-    #[Route("app_admin_setting","/admin/setting")]
+    #[Route("/admin/setting","app_admin_setting")]
     public function index():Response
     {
         return $this->view("admin/setting/index",['isSetting' => true]);

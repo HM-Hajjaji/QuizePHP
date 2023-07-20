@@ -37,7 +37,7 @@ trait Controller
         namespace {$this->generateNamespace($name)};\n
         use Core\Controller\CoreController;
         use Core\Http\Response;
-        use Core\Http\Route;\n
+        use Route\Route;\n
         class {$this->generateControllerName($name)} extends CoreController
         {
             {$this->generateAction("index",$this->generateControllerPath($name))}

@@ -17,15 +17,15 @@ trait Action
 
     protected function generateRoute(string $actionName,string $controllerName,string|array $methods ="GET"): string
     {
-        $path = sprintf("app_%s",str_replace("/","_",$this->generateActionPath($controllerName,$actionName)));
+        $name = sprintf("app_%s",str_replace("/","_",$this->generateActionPath($controllerName,$actionName)));
         if ($methods != "GET")
         {
             return <<<ROUTE
-            #[Route("$path","/{$this->generateActionPath($controllerName,$actionName)}",[$methods])]
+            #[Route("/{$this->generateActionPath($controllerName,$actionName)}","$name",[$methods])]
             ROUTE;
         }
         return <<<ROUTE
-        #[Route("$path","/{$this->generateActionPath($controllerName,$actionName)}")]
+        #[Route("/{$this->generateActionPath($controllerName,$actionName)}","$name")]
         ROUTE;
     }
 

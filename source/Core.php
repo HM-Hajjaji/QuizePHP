@@ -4,7 +4,6 @@ namespace App;
 
 use Core\Http\Request;
 use Core\Http\Response;
-use Core\Http\Route\CoreRoute;
 use Core\Validation\Validator;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
@@ -13,20 +12,25 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\MissingMappingDriverImplementation;
 use Doctrine\ORM\ORMSetup;
 use Dotenv\Dotenv;
+use Route\Http\HttpRoute;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
 final class Core
 {
-    private CoreRoute $route;
+    private HttpRoute $route;
     private EntityManager $entityManager;
     private Validator $validator;
     private Request $request;
     private Response $response;
     private Run $whoops;
+
+    /**
+     * @throws \ReflectionException
+     */
     public function __construct()
     {
-        $this->route = new CoreRoute();
+        $this->route = new HttpRoute(basePath()."/source/Controller");
         $this->validator = new Validator();
         $this->request = Request::createFromGlobals();
         $this->response = new Response();
@@ -36,22 +40,22 @@ final class Core
     /**
      * @throws MissingMappingDriverImplementation
      * @throws Exception
+     * @throws \Exception
      */
-    public function run(bool $isResolve):void
+    public function run():void
     {
         Dotenv::createImmutable(basePath())->load();
         $this->whoops->pushHandler(new PrettyPageHandler);
         $this->whoops->register();
         $this->entityManager = $this->handleEntityManager();
-        $this->route->handleRoute();
-        $this->route->resolve($isResolve);
+        $this->route->resolve();
     }
 
     /**
      * the function for get object route
-     * @return CoreRoute
+     * @return HttpRoute
      */
-    public function getRoute(): CoreRoute
+    public function getRoute(): HttpRoute
     {
         return $this->route;
     }

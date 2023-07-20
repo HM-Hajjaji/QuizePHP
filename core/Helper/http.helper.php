@@ -2,11 +2,11 @@
 
 use Core\Http\Request;
 use Core\Http\Response;
-use Core\Http\Route\CoreRoute;
+use Route\Http\HttpRoute;
 
 if (!function_exists("route"))
 {
-    function route():CoreRoute
+    function route():HttpRoute
     {
         return core()->getRoute();
     }
@@ -48,18 +48,10 @@ if (!function_exists("urlBase"))
 if (!function_exists("path"))
 {
     /**
-     * the function get url by name from list routes
-     * @param string $path the name of path in list routes
-     * @param array $params
-     * @return string
+     * @throws Exception
      */
-    function path(string $path = "app",array $params = []):string
+    function path(string $name, array $params = []):string
     {
-        $url = route()->path($path,$params);
-        if (!$url)
-        {
-            return "/";
-        }
-        return $url;
+        return HttpRoute::path($name,$params);
     }
 }

@@ -21,6 +21,7 @@
         "symfony/cache": "^6.3",
         "symfony/http-foundation": "^6.3",
         "ext-readline": "*",
-        "filp/whoops": "^2.15"
+        "filp/whoops": "^2.15",
+        "hm-hajjaji/route": "dev-master"
     }
 }

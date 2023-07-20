@@ -22,6 +22,9 @@ abstract class CoreController
         return Compiler::compile($content);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[NoReturn] public function redirectTo(string $path, array $params=[]):void
     {
         request()->setMethod("GET");

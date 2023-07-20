@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Repository\QuizRepository;
 use Core\Controller\CoreController;
 use Core\Http\Response;
-use Core\Http\Route;
+use Route\Route;
 
 class QuizController extends CoreController
 {
@@ -16,7 +16,7 @@ class QuizController extends CoreController
         $this->quizRepository = new QuizRepository();
     }
 
-    #[Route("app_admin_quiz","/admin/quiz")]
+    #[Route("/admin/quiz","app_admin_quiz")]
     public function index():Response
     {
         return $this->view("admin/quiz/index",['isQuiz' => true]);

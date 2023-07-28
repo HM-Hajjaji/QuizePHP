@@ -1,8 +1,9 @@
 <?php
-
-//using core helper functions
-require_once dirname(__DIR__) . "/core/Helper/core.helper.php";
 //autoload
-require_once basePath()."/vendor/autoload.php";
+require_once dirname(__DIR__)."/vendor/autoload.php";
 //run core of project
-core()->run();
+try {
+    core()->run(dirname(__DIR__));
+} catch (Exception $e) {
+    throw $e;
+}

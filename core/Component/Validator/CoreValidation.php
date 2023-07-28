@@ -1,5 +1,5 @@
 <?php
-namespace Core\Validation;
+namespace Core\Component\Validator;
 abstract class CoreValidation
 {
     protected const DEFAULT_VALIDATION_ERRORS = [

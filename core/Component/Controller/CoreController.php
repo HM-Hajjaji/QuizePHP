@@ -1,9 +1,8 @@
 <?php
+namespace Core\Component\Controller;
 
-namespace Core\Controller;
-
-use Core\Compiler\Compiler;
-use Core\Http\Response;
+use Core\Component\Generator\Generator;
+use Http\Response;
 use JetBrains\PhpStorm\NoReturn;
 
 abstract class CoreController
@@ -15,11 +14,7 @@ abstract class CoreController
 
     private function renderView(string $path, array $data): string
     {
-        extract($data);
-        ob_start();
-            include_once sprintf(viewPath()."%s.php",$path);
-        $content = ob_get_clean();
-        return Compiler::compile($content);
+        return Generator::generate($path,$data);
     }
 
     /**
@@ -27,7 +22,7 @@ abstract class CoreController
      */
     #[NoReturn] public function redirectTo(string $path, array $params=[]):void
     {
-        request()->setMethod("GET");
+        request()->server->setMethod("GET");
         header("location:".path($path,$params));
         exit();
     }

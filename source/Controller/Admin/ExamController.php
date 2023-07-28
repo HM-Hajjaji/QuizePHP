@@ -2,8 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use Core\Controller\CoreController;
-use Core\Http\Response;
+use Core\Component\Controller\CoreController;
+use Http\Response;
 use Route\Route;
 
 class ExamController extends CoreController

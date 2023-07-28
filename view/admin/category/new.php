@@ -18,7 +18,7 @@
         <form action="<?=path("app_admin_category_new")?>" method="post">
             <div class="card-body">
                 <div class="form-group mb-1">
-                    <label for="exampleInputEmail1">Title:</label>
+                    <label for="title">Title:</label>
                     <input type="text" name="title" class="form-control" id="title" placeholder="Enter Title" value="<?=$old['title']??''?>">
                 </div>
                 <?php if (isset($errors['title'])) :?>

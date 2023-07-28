@@ -9,7 +9,7 @@ if (!function_exists("basePath"))
      */
     function basePath():string
     {
-        return dirname(__DIR__,2);
+        return core()->getProjectDir();
     }
 }
 

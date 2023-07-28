@@ -3,10 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Repository\QuizRepository;
-use Core\Controller\CoreController;
-use Core\Http\Response;
+use Core\Component\Controller\CoreController;
+use Http\Response;
 use Route\Route;
 
+#[Route("/admin/quiz")]
 class QuizController extends CoreController
 {
     private QuizRepository $quizRepository;
@@ -16,9 +17,20 @@ class QuizController extends CoreController
         $this->quizRepository = new QuizRepository();
     }
 
-    #[Route("/admin/quiz","app_admin_quiz")]
+    #[Route("/","app_admin_quiz")]
     public function index():Response
     {
-        return $this->view("admin/quiz/index",['isQuiz' => true]);
+
+        return $this->view("admin/quiz/index",['isQuiz' => true,"quizs" => $this->quizRepository->findAll()]);
+    }
+
+    #[Route("/new","app_admin_quiz_new",['GET','POST'])]
+    public function new():Response
+    {
+        if (request()->server->getMethod() == "POST")
+        {
+
+        }
+        return $this->view("admin/quiz/new",['isQuiz' => true]);
     }
 }

@@ -4,24 +4,29 @@
     "autoload": {
         "psr-4": {
             "App\\": "source/",
-            "Core\\": "core/"
-        }
+            "Core\\": "core"
+        },
+        "files": [
+            "core/Helper/core.helper.php"
+        ]
     },
     "authors": [
         {
-            "name": "HM-Hajjaji",
-            "email": "hhajjaji.fsd@gmail.com"
+            "name": "Hamza Hajjaji",
+            "email": "hhajjaji.fsd@gmail.com",
+            "homepage": "https://github.com/HM-Hajjaji",
+            "role": "Developer"
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "^5.5",
         "symfony/var-dumper": "^6.3",
         "ext-pdo": "*",
+        "ext-readline": "*",
         "doctrine/orm": "^2.15",
         "symfony/cache": "^6.3",
-        "symfony/http-foundation": "^6.3",
-        "ext-readline": "*",
+        "vlucas/phpdotenv": "^5.5",
+        "hm-hajjaji/route": "^v1.1",
         "filp/whoops": "^2.15",
-        "hm-hajjaji/route": "dev-master"
+        "hm-hajjaji/http": "^0.3.0"
     }
 }

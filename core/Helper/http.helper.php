@@ -1,16 +1,8 @@
 <?php
 
-use Core\Http\Request;
-use Core\Http\Response;
+use Http\Request;
+use Http\Response;
 use Route\Http\HttpRoute;
-
-if (!function_exists("route"))
-{
-    function route():HttpRoute
-    {
-        return core()->getRoute();
-    }
-}
 
 if (!function_exists("request"))
 {
@@ -37,11 +29,7 @@ if (!function_exists("urlBase"))
      */
     function urlBase():string
     {
-        $protocol = "http";
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-            $protocol = "https";
-        }
-        return sprintf("%s://%s/",$protocol,$_SERVER["HTTP_HOST"]);
+       return request()->server->getBaseUri();
     }
 }
 

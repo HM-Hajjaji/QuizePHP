@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Validation;
+namespace Core\Component\Validator;
 
 class Validator extends CoreValidation
 {

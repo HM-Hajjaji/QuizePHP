@@ -4,12 +4,12 @@ namespace App\Controller\Admin;
 
 use App\Model\Category;
 use App\Repository\CategoryRepository;
-use Core\Controller\CoreController;
-use Core\Http\Response;
-use Route\Route;
+use Core\Component\Controller\CoreController;
+use Http\Response;
 use JetBrains\PhpStorm\NoReturn;
+use Route\Route;
 
-#[Route("/admin")]
+#[Route("/admin/category")]
 class CategoryController extends CoreController
 {
     private CategoryRepository $categoryRepository;
@@ -19,18 +19,18 @@ class CategoryController extends CoreController
         $this->categoryRepository = new CategoryRepository();
     }
 
-    #[Route("/category","app_admin_category")]
+    #[Route("/","app_admin_category")]
     public function index():Response
     {
         return $this->view("admin/category/index",['isCategory' => true,"categorys" => $this->categoryRepository->findAll()]);
     }
 
-    #[Route("/admin/category/new","app_admin_category_new",["GET","POST"])]
+    #[Route("/new","app_admin_category_new",["GET","POST"])]
     public function new():Response
     {
-        if (request()->getMethod() == "POST")
+        if (request()->server->getMethod() == "POST")
         {
-            $data = request()->request->all();
+            $data = request()->query->all();
 
             validator()->setData($data)
                 ->required(array_keys($data))
@@ -51,13 +51,13 @@ class CategoryController extends CoreController
         return $this->view("admin/category/new",['isCategory' => true]);
     }
 
-    #[Route("/admin/category/{id}/edit","app_admin_category_edit",["GET","POST"])]
+    #[Route("/{id}/edit","app_admin_category_edit",["GET","POST"])]
     public function edit(int $id):Response
     {
         $category = $this->categoryRepository->find($id);
-        if (request()->getMethod() == "POST")
+        if (request()->server->getMethod() == "POST")
         {
-            $data = request()->request->all();
+            $data = request()->query->all();
 
             validator()->setData($data)
                 ->required(array_keys($data))
@@ -76,13 +76,13 @@ class CategoryController extends CoreController
         return $this->view("admin/category/edit",["category" => $category,'isCategory' => true]);
     }
 
-    #[Route("/admin/category/{id}/show","app_admin_category_show")]
+    #[Route("/{id}/show","app_admin_category_show")]
     public function show(int $id):Response
     {
         return $this->view("admin/category/show",['category' => $this->categoryRepository->find($id),'isCategory' => true]);
     }
 
-    #[Route("/admin/category/{id}/delete","app_admin_category_delete","POST")]
+    #[Route("/{id}/delete","app_admin_category_delete","POST")]
     #[NoReturn]
     public function delete(int $id):void
     {

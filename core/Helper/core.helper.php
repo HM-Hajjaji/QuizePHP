@@ -1,26 +1,22 @@
 <?php
 
 use App\Core;
-use Core\Validation\Validator;
+use Core\Component\Validator\Validator;
 use Doctrine\ORM\EntityManager;
 
 require_once "http.helper.php";
 require_once "path.helper.php";
 require_once "engine.helper.php";
+
 //main function
-if (!function_exists("core"))
+if (!function_exists("kernel"))
 {
-    /**
-     * the function get one instance from object Core
-     * @return Core
-     */
     function core():Core
     {
         static $core = new Core();
         return $core;
     }
 }
-
 
 if (!function_exists("entityManager"))
 {

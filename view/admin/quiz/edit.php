@@ -1,13 +1,13 @@
 <?= inheritance("base-admin")?>
 
-<?=block("title")?>New Quiz<?=endBlock("title")?>
+<?=block("title")?>Edit Quiz<?=endBlock("title")?>
 
 <?=block("body")?>
     <div class="card">
         <div class="card-header d-flex flex-wrap py-2 align-items-center">
             <div class="col-sm-6">
                 <h5 class="card-title font-weight-bold">
-                    <i class="fas fa-plus-circle mr-2"></i>New Quiz
+                    <i class="fas fa-edit mr-2"></i>Edit Quiz
                 </h5>
             </div>
             <div class="col-sm-6 d-flex justify-content-end">
@@ -15,12 +15,12 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="<?=path("app_admin_quiz_new")?>" method="post">
+            <form action="<?=path("app_admin_quiz_edit",['id' => $quiz->getId()])?>" method="post">
                 <div class="card-body">
                     <div class="my-1">
                         <div class="form-group mb-1">
                             <label for="question">Question:</label>
-                            <input type="text" name="question" class="form-control" id="question" placeholder="Enter question" value="<?=$old['question']??''?>">
+                            <input type="text" name="question" class="form-control" id="question" placeholder="Enter question" value="<?=$old['question']??$quiz->getQuestion()?>">
                         </div>
                         <?php if (isset($errors['question'])) :?>
                             <small class="text-danger font-weight-bold"><span class="badge badge-danger">ERROR</span> <?=$errors['question']?></small>
@@ -33,7 +33,7 @@
                             <select name="category" class="form-control" id="category">
                                 <?php if (!empty($categorys)):?>
                                     <?php foreach ($categorys as $category):?>
-                                        <option value="<?=$category->getId()?>"><?=$category->getTitle()?></option>
+                                        <option value="<?=$category->getId()?>" <?=$quiz->getCategory() === $category ? "selected" :""?> ><?=$category->getTitle()?></option>
                                     <?php endforeach;?>
                                 <?php endif;?>
                             </select>
@@ -46,7 +46,7 @@
                     <div class="my-1">
                         <div class="form-group mb-1">
                             <label for="answer">Answer:</label>
-                            <input type="text" name="answer" class="form-control" id="answer" placeholder="Enter answer" value="<?=$old['answer']??''?>">
+                            <input type="text" name="answer" class="form-control" id="answer" placeholder="Enter answer" value="<?=$old['answer']??$quiz->getAnswer()?>">
                         </div>
                         <?php if (isset($errors['answer'])) :?>
                             <small class="text-danger font-weight-bold"><span class="badge badge-danger">ERROR</span> <?=$errors['answer']?></small>
@@ -56,7 +56,7 @@
                     <div class="my-1">
                         <div class="form-group mb-1">
                             <label for="warning_first">Warning first:</label>
-                            <input type="text" name="warning_first" class="form-control" id="warning_first" placeholder="Enter warning first" value="<?=$old['warning_first']??''?>">
+                            <input type="text" name="warning_first" class="form-control" id="warning_first" placeholder="Enter warning first" value="<?=$old['warning_first']??$quiz->getWarningFirst()?>">
                         </div>
                         <?php if (isset($errors['warning_first'])) :?>
                             <small class="text-danger font-weight-bold"><span class="badge badge-danger">ERROR</span> <?=$errors['warning_first']?></small>
@@ -66,7 +66,7 @@
                     <div class="my-1">
                         <div class="form-group mb-1">
                             <label for="warning_second">Warning second:</label>
-                            <input type="text" name="warning_second" class="form-control" id="warning_second" placeholder="Enter warning second" value="<?=$old['warning_second']??''?>">
+                            <input type="text" name="warning_second" class="form-control" id="warning_second" placeholder="Enter warning second" value="<?=$old['warning_second']??$quiz->getWarningSecond()?>">
                         </div>
                         <?php if (isset($errors['warning_second'])) :?>
                             <small class="text-danger font-weight-bold"><span class="badge badge-danger">ERROR</span> <?=$errors['warning_second']?></small>
@@ -76,7 +76,7 @@
                     <div class="my-1">
                         <div class="form-group mb-1">
                             <label for="note">Note:</label>
-                            <input type="number" name="note" class="form-control" id="note" placeholder="Enter note" value="<?=$old['note']??''?>">
+                            <input type="number" name="note" class="form-control" id="note" placeholder="Enter note" value="<?=$old['note']??$quiz->getNote()?>">
                         </div>
                         <?php if (isset($errors['note'])) :?>
                             <small class="text-danger font-weight-bold"><span class="badge badge-danger">ERROR</span> <?=$errors['note']?></small>

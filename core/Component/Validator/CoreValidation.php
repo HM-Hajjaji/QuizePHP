@@ -12,6 +12,7 @@ abstract class CoreValidation
         'alphanumeric' => 'The %s should have only letters and numbers',
         'secure' => 'The %s must have between 8 and 64 characters and contain at least one number, one upper case letter, one lower case letter and one special character',
         'unique' => 'The %s already exists',
+        "numeric" => 'The %s should have only numbers'
     ];
     protected array $dataHandling = [];
     protected array $cleanData = [];
@@ -87,7 +88,7 @@ abstract class CoreValidation
     public function alphanumeric(string $key):static
     {
         $value = $this->getValueOfDateHandling($key);
-        if (!is_numeric($value)) {
+        if (!is_scalar($value)) {
             $this->setError($key,sprintf(self::DEFAULT_VALIDATION_ERRORS['alphanumeric'],$key));
         }else{
             $this->setCleanData($key,$value);
@@ -125,6 +126,17 @@ abstract class CoreValidation
         if (strlen($value) < $min || strlen($value) > $max)
         {
             $this->setError($key,sprintf(self::DEFAULT_VALIDATION_ERRORS['between'],$key,$min,$max));
+        }else{
+            $this->setCleanData($key,$value);
+        }
+        return $this;
+    }
+
+    public function numeric(string $key): static
+    {
+        $value = $this->getValueOfDateHandling($key);
+        if (!is_numeric($value)) {
+            $this->setError($key,sprintf(self::DEFAULT_VALIDATION_ERRORS['numeric'],$key));
         }else{
             $this->setCleanData($key,$value);
         }

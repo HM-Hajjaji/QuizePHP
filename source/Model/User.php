@@ -26,7 +26,7 @@ class User
     private string $password;
 
     #[ORM\Column(type: 'json',nullable: true)]
-    private array $types;
+    private ?array $types = null;
 
     #[ORM\Column(type: "datetime_immutable")]
     private \DateTimeImmutable $createdAt;

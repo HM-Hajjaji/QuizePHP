@@ -33,7 +33,7 @@
         </div>
     </form>
 
-    <p class="mb-0">
+    <p class="mb-0 mt-2">
         <a href="<?=path("app_register")?>" class="text-center">Register a new membership</a>
     </p>
 <?=endBlock("form")?>

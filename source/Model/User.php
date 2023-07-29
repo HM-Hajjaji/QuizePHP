@@ -112,7 +112,7 @@ class User
     }
 
     /**
-     * @param array $type
+     * @param array $types
      */
     public function setType(array $types): void
     {

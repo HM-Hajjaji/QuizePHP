@@ -142,4 +142,29 @@ abstract class CoreValidation
         }
         return $this;
     }
+
+    public function same(string $key,string $sameKey): static
+    {
+        $value = $this->getValueOfDateHandling($key);
+        $valueSame = $this->getValueOfDateHandling($sameKey);
+        if ($value === $valueSame)
+        {
+            $this->setCleanData($key,$value);
+        }else{
+            $this->setError($key,sprintf(self::DEFAULT_VALIDATION_ERRORS['same'],$key,$sameKey));
+        }
+        return $this;
+    }
+
+    public function unique(string $key,object $repository): static
+    {
+        $value = $this->getValueOfDateHandling($key);
+        if ($repository->count(['username' => $value]) != 0)
+        {
+            $this->setError($key,sprintf(self::DEFAULT_VALIDATION_ERRORS['unique'],$key));
+        }else{
+            $this->setCleanData($key,$value);
+        }
+        return $this;
+    }
 }

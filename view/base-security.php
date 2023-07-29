@@ -13,7 +13,7 @@
 <div class="login-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="#" class="h1"><b>Admin</b>LTE</a>
+            <a href="<?=$_SERVER['PHP_SELF']?>" class="h1"><b>Admin</b>LTE</a>
         </div>
         <div class="card-body">
             <p class="login-box-msg"><?= block("form_title") ?></p>

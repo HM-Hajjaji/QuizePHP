@@ -23,11 +23,12 @@
                 <td><?=$quiz->getNote()?></td>
                 <td><?=$quiz->getCategory()->getTitle()?></td>
                 <td>
-                    <a href="<?=path("app_admin_quiz_show",['id' => $quiz->getId()])?>" class="btn btn-primary"><i class="fas fa-info-circle"></i></a>
-                    <a href="<?=path("app_admin_quiz_edit",['id' => $quiz->getId()])?>" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                    <form class="d-inline" method="post" action="<?=path("app_admin_quiz_delete",['id' => $quiz->getId()])?>" onsubmit="return confirm('Are you sure you want to delete this item?')">
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                    </form>
+                    <?php
+                        include_once viewPath()."tools/action.php";
+                        echo action(path("app_admin_quiz_show",['id' => $quiz->getId()]),"btn-primary","fa-info-circle");
+                        echo action(path("app_admin_quiz_edit",['id' => $quiz->getId()]),"btn-info","fa-edit");
+                        echo delete(path("app_admin_quiz_delete",['id' => $quiz->getId()]));
+                    ?>
                 </td>
             </tr>
         <?php endforeach;?>

@@ -11,7 +11,10 @@
             </h5>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
-            <a href="<?=path("app_admin_category_new")?>" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle mr-1"></i>New</a>
+            <?php
+            include_once viewPath()."tools/action.php";
+            echo action(path("app_admin_category_new"),"btn-primary","fa-plus-circle mr-1","New")
+            ?>
         </div>
     </div>
     <div class="card-body">
@@ -32,11 +35,12 @@
                             <td><?=$category->getTitle()?></td>
                             <td><?=$category->getCreatedAt()->format("Y-m-d H:i")?></td>
                             <td>
-                                <a href="<?=path("app_admin_category_show",['id' => $category->getId()])?>" class="btn btn-primary"><i class="fas fa-info-circle"></i></a>
-                                <a href="<?=path("app_admin_category_edit",['id' => $category->getId()])?>" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                                <form class="d-inline" method="post" action="<?=path("app_admin_category_delete",['id' => $category->getId()])?>" onsubmit="return confirm('Are you sure you want to delete this item?')">
-                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </form>
+                                <?php
+                                    include_once viewPath()."tools/action.php";
+                                    echo action(path("app_admin_category_show",['id' => $category->getId()]),"btn-primary","fa-info-circle");
+                                    echo action(path("app_admin_category_edit",['id' => $category->getId()]),"btn-info","fa-edit");
+                                    echo delete(path("app_admin_category_delete",['id' => $category->getId()]));
+                                ?>
                             </td>
                         </tr>
                     <?php endforeach;?>

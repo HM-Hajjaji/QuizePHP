@@ -11,7 +11,10 @@
             </h5>
         </div>
         <div class="col-sm-6 d-flex justify-content-end">
-            <a href="<?=path("app_admin_category")?>" class="btn btn-sm btn-primary"><i class="fas fa-arrow-left"></i></a>
+            <?php
+                include_once viewPath()."tools/action.php";
+                echo action(path("app_admin_category"),"btn-primary","fa-arrow-left")
+            ?>
         </div>
     </div>
     <div class="card-body">
